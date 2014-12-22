@@ -23,3 +23,8 @@ _testmain.go
 *.test
 *.prof
 _vendor/
+.tmp/
+bower_components/
+node_modules/
+npm-debug.log
+client/dist/
