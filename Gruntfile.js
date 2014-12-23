@@ -10,6 +10,24 @@ module.exports = function(grunt) {
         src: 'client/src/index.html',
         dest: 'client/dist/index.html',
       },
+      assets: {
+        files: [{
+          expand: true,
+          cwd: 'client/src/assets/',
+          src: ['partials/**'],
+          dest: 'client/dist/assets/',
+        }],
+      },
+    },
+    ngAnnotate: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat/assets',
+          src: '*/**.js',
+          dest: '.tmp/concat/assets'
+        }]
+      }
     },
     usemin: {
       html: 'client/dist/index.html',
@@ -42,8 +60,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'useminPrepare',
     'concat:generated',
+    'ngAnnotate',
     'uglify:generated',
-    'copy:index',
+    'copy',
     'usemin'
   ]);
 };

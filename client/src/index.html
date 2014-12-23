@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="typeApp">
   <head>
     <meta charset="UTF-8">
     <title></title>
+
+    <!-- build:js /assets/js/main.js -->
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-route/angular-route.js"></script>
+    <script src="assets/js/app/app.js"></script>
+    <script src="assets/js/app/controllers.js"></script>
+    <!-- endbuild -->
   </head>
 
-  <body ng-app="typeApp">
+  <body>
+    <div ng-view></div>
   </body>
 
-  <!-- build:js assets/js/main.js -->
-  <script src="../../bower_components/angular/angular.js"></script>
-  <script src="assets/js/app/app.js"></script>
-  <!-- endbuild -->
 </html>
