@@ -1,6 +1,7 @@
 'use strict';
 
 var app = angular.module('typeApp', [
+  'famous.angular',
   'ngRoute',
   'appControllers'
 ]);

@@ -62,6 +62,7 @@ module.exports = function(grunt) {
     'concat:generated',
     'ngAnnotate',
     'uglify:generated',
+    'cssmin:generated',
     'copy',
     'usemin'
   ]);
