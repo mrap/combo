@@ -16,7 +16,10 @@ func main() {
 	box := rice.MustFindBox("client/dist/assets")
 	assetsFileServer := http.StripPrefix("/assets/", http.FileServer(box.HTTPBox()))
 	http.Handle("/assets/", assetsFileServer)
+	http.HandleFunc("/combos", combosHandler)
 	http.HandleFunc("/", homeHandler)
+
+	StoreWords("wordlists/google-10000-english.txt")
 	http.ListenAndServe(":8000", nil)
 }
 
