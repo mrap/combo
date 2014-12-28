@@ -1,5 +1,5 @@
-<div class="typing-lesson">
+<typing-lesson lesson="lesson" class="typing-lesson">
   <div class="current-combo">
     <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{current: $index == lesson.letterIdx}">{{letter}}</span>
  </div>
-</div>
+</typing-lesson>

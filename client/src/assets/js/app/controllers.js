@@ -22,18 +22,6 @@
 
     $scope.lesson = new Lesson();
     $scope.lesson.start(["abc", "xyz"]);
-
-    $scope.$on('keypress', function(e, kd) {
-      var key = String.fromCharCode(kd.keyCode);
-
-      if (key === $scope.lesson.curLetter) {
-        if (!$scope.lesson.next()) {
-          console.log("Completed!");
-        }
-      } else {
-        $scope.lesson.restartCurrent();
-      }
-    });
   });
 
 })();

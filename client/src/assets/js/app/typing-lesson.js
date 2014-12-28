@@ -1,9 +1,9 @@
 (function() {
   "use strict";
 
-  var typingLessonModule = angular.module('typingLessonModule', []);
+  var _module = angular.module('typingLessonModule', []);
 
-  typingLessonModule.factory('Lesson', function() {
+  _module.factory('Lesson', function() {
 
     function Lesson() {
       this.combos = [];
@@ -43,5 +43,32 @@
     };
 
     return Lesson;
+  });
+
+  _module.directive('typingLesson', function() {
+
+    function link(scope, elem, attrs) {
+
+      scope.$on('keypress', function(e, kd) {
+        var key = String.fromCharCode(kd.keyCode);
+
+        if (key === scope.lesson.curLetter) {
+          if (!scope.lesson.next()) {
+            console.log("Completed!");
+          }
+        } else {
+          scope.lesson.restartCurrent();
+        }
+      });
+
+    }
+
+    return {
+      restrict: 'E',
+      scope: {
+        lesson: '='
+      },
+      link: link
+    };
   });
 })();
