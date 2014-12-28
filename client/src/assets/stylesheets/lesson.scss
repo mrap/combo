@@ -29,8 +29,8 @@ $letterFont: 700 $letterSize 'Roboto', sans-serif;
     color: $currentLetterColor;
   }
 
-  .incorrect {
-    color: $incorrectLetterColor;
+  .wrong {
+    color: $incorrectLetterColor !important;
   }
 }
 

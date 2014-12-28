@@ -45,19 +45,36 @@
     return Lesson;
   });
 
-  _module.directive('typingLesson', function() {
+
+  _module.directive('typingLesson', function($timeout) {
 
     function link(scope, elem, attrs) {
+
+      function correctKey() {
+        if (!scope.lesson.next()) {
+          console.log("Completed!");
+        }
+      }
+
+      function wrongKey(actual) {
+        var letterNode = getComboElem().children()[scope.lesson.letterIdx];
+        var letterElem = angular.element(letterNode);
+
+        letterElem.addClass('wrong');
+        scope.lesson.restartCurrent();
+
+        $timeout(function(){
+          letterElem.removeClass('wrong');
+        }, 500);
+      }
 
       var deregKeypress = scope.$on('keypress', function(e, kd) {
         var key = String.fromCharCode(kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
-          if (!scope.lesson.next()) {
-            console.log("Completed!");
-          }
+          correctKey();
         } else {
-          scope.lesson.restartCurrent();
+          wrongKey(key);
         }
       });
 
@@ -65,6 +82,22 @@
       scope.$on('$destroy', function() {
         deregKeypress();
       });
+
+      // Cache comboElem
+      var _comboElem = null;
+      function getComboElem() {
+        if (_comboElem) { return _comboElem; }
+
+        var children = elem.children();
+
+        for (var i = 0; i < children.length; i++) {
+          var child = angular.element(children[i]);
+          if (child.hasClass('current-combo')) {
+            _comboElem = child;
+            return _comboElem;
+          }
+        }
+      }
 
     }
 
