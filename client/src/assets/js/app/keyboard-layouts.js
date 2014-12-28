@@ -45,9 +45,15 @@
         case 2:
           return new Lesson(layout.midR, 2, 3);
         case 3:
-          return new Lesson(layout.midL, 3, 4);
+          return new Lesson(layout.midL, 3, 5);
         case 4:
-          return new Lesson(layout.midR, 3, 4);
+          return new Lesson(layout.midR, 3, 5);
+        case 5:
+          return new Lesson(layout.midL, 3, 5);
+        case 6:
+          return new Lesson(layout.midL+layout.midR, 2, 4);
+        case 7:
+          return new Lesson(layout.midL+layout.midR, 3, 5);
         // TODO: create remaining lessons
         default:
           console.log("No lesson number " + level);
