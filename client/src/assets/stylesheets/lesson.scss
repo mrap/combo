@@ -1,7 +1,8 @@
-$letterColor: #657b83;
+$letterColor: rgba(0, 0, 0, 0.54);
 $currentLetterColor: #268bd2;
 $incorrectLetterColor: #dc322f;
-$letterSize: 6em;
+$letterSize: 8em;
+$letterFont: 700 $letterSize 'Roboto', sans-serif;
 
 
 .typing-lesson {
@@ -13,10 +14,9 @@ $letterSize: 6em;
   text-align: center;
   padding: 10em;
   color: $letterColor;
-  font-family: 'Inconsolata', monospace;
 
   span {
-    font-size: $letterSize;
+    font: $letterFont;
     padding-left: 5px;
     padding-right: 5px;
   }
