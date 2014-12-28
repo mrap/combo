@@ -69,7 +69,7 @@
       }
 
       var deregKeypress = scope.$on('keypress', function(e, kd) {
-        var key = String.fromCharCode(kd.keyCode);
+        var key = String.fromCharCode(kd.charCode || kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
           correctKey();
