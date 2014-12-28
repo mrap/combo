@@ -19,6 +19,14 @@ module.exports = function(grunt) {
         }],
       },
     },
+    jshint: {
+      options: {
+        globals: {
+          angular: true,
+        },
+      },
+      all: ['client/src/assets/js/**/*.js']
+    },
     ngAnnotate: {
       dist: {
         files: [{
@@ -58,6 +66,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['build']);
   grunt.registerTask('build', [
+    'jshint',
     'useminPrepare',
     'concat:generated',
     'ngAnnotate',
