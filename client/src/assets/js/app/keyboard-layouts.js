@@ -25,31 +25,30 @@
     };
   });
 
-  kbLayouts.factory('lessonManager', function(kbLayouts){
+  kbLayouts.service('lessonManager', function(kbLayouts){
     var DEFAULT_COUNT = 20;
 
     function Lesson(chars, maxLen) {
       this.count = DEFAULT_COUNT;
       this.chars = chars || "";
-      this.maxLen = maxLen || 2;
+      this.max_len = maxLen || 2;
     }
 
-    return {
-      getLesson: function(lessonNum, layoutName) {
-        var layout = kbLayouts.getLayout(layoutName);
-        if (!layout) { return null; }
+    this.getLessonParams = function(level, layoutName) {
+      var layout = kbLayouts.getLayout(layoutName);
+      if (!layout) { return null; }
 
-        switch (parseInt(lessonNum)) {
-          case 1:
-            return new Lesson(layout.midL, 2);
-          case 2:
-            return new Lesson(layout.midR, 2);
-          // TODO: create remaining lessons
-          default:
-            console.log("No lesson number " + lessonNum);
-          return null;
-        }
+      switch (parseInt(level)) {
+        case 1:
+          return new Lesson(layout.midL, 2);
+        case 2:
+          return new Lesson(layout.midR, 2);
+        // TODO: create remaining lessons
+        default:
+          console.log("No lesson number " + level);
+        return null;
       }
     };
+
   });
 })();

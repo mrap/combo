@@ -9,7 +9,7 @@
 
   app.config(function ($routeProvider){
     $routeProvider.
-      when('/layout/:layout/lesson/:lesson', {
+      when('/layout/:layout/level/:level', {
       templateUrl: 'assets/partials/lesson.html',
       controller: 'TyperCtrl'
     }).

@@ -16,12 +16,19 @@
     };
   });
 
-  controllers.controller('TyperCtrl', function($scope, $routeParams, Lesson) {
+  controllers.controller('TyperCtrl', function($scope, $routeParams, $http, Lesson, lessonManager) {
     $scope.layout = $routeParams.layout;
-    $scope.lesson = $routeParams.lesson;
+    $scope.level = $routeParams.level;
 
     $scope.lesson = new Lesson();
-    $scope.lesson.start(["abc", "xyz"]);
+    $http.get(
+      '/combos',
+      { params: lessonManager.getLessonParams($scope.level, $scope.layout) }
+    ).success(function(data, status, headers, config) {
+      $scope.lesson.start(data.combos);
+    }).error(function(data, status, headers, config) {
+      console.log("Error requesting /combos");
+    });
   });
 
 })();

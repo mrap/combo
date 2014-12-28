@@ -7,15 +7,11 @@ import (
 	"math/rand"
 	"net/http"
 	"sort"
+	"strconv"
 
 	"github.com/mrap/stringutil"
 	wordpatterns "github.com/mrap/wordpatterns"
 )
-
-type CombosReq struct {
-	Chars json.RawMessage
-	Count int
-}
 
 type CombosRes struct {
 	Combos []string `json:"combos"`
@@ -28,16 +24,22 @@ var (
 )
 
 func combosHandler(w http.ResponseWriter, req *http.Request) {
-	decoder := json.NewDecoder(req.Body)
-	var pl CombosReq
-	if err := decoder.Decode(&pl); err != nil {
-		log.Fatal(err)
+	v := req.URL.Query()
+
+	// Validate query params
+	chars := v.Get("chars")
+	if len(chars) == 0 {
+		w.WriteHeader(400)
+		return
 	}
 
-	// strip outer quotes
-	noquotes := pl.Chars[1 : len(pl.Chars)-1]
-	combos := RankedCombos(_sharedLookup, string(noquotes), 2)
-	comboList := GenerateComboList(_sharedWordmap, combos, pl.Count)
+	count, err := strconv.Atoi(v.Get("count"))
+	if err != nil {
+		log.Println(err)
+	}
+
+	combos := RankedCombos(_sharedLookup, chars, 2)
+	comboList := GenerateComboList(_sharedWordmap, combos, count)
 
 	data, err := json.Marshal(CombosRes{comboList})
 	if err != nil {
