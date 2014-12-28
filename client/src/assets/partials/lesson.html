@@ -1,3 +1,5 @@
-<div>partials/lesson.html</div>
-<h1>Layout: {{layout}}</h1>
-<h1>Lesson: {{lesson}}</h1>
+<div class="typing-lesson">
+  <div class="current-combo">
+    <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{current: $index == lesson.letterIdx}">{{letter}}</span>
+ </div>
+</div>

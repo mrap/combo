@@ -37,6 +37,17 @@ module.exports = function(grunt) {
         }]
       }
     },
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'client/src/assets/stylesheets/',
+          src: ['*.scss'],
+          dest: 'client/src/assets/stylesheets',
+          ext: '.css',
+        }],
+      }
+    },
     usemin: {
       html: 'client/dist/index.html',
       options: {
@@ -66,6 +77,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['build']);
   grunt.registerTask('build', [
+    'sass',
     'jshint',
     'useminPrepare',
     'concat:generated',

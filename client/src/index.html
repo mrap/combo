@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="typeApp">
+<html lang="en" ng-app="typeApp" ng-controller="MainCtrl">
   <head>
     <meta charset="UTF-8">
     <title></title>
     <!-- build:css /assets/css/main.css -->
     <link rel="stylesheet" href="../../bower_components/famous-angular/dist/famous-angular.css">
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+    <link rel="stylesheet" href="assets/stylesheets/lesson.css">
     <!-- endbuild -->
 
     <!-- build:js /assets/js/main.js -->
@@ -15,10 +17,11 @@
     <script src="assets/js/app/app.js"></script>
     <script src="assets/js/app/controllers.js"></script>
     <script src="assets/js/app/keyboard-layouts.js"></script>
+    <script src="assets/js/app/typing-lesson.js"></script>
     <!-- endbuild -->
   </head>
 
-  <body>
+  <body ng-keydown="rootKeyDown($event);" ng-keypress="rootKeyPress($event);">>
     <div ng-view></div>
   </body>
 
