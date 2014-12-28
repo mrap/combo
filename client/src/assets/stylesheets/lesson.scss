@@ -14,6 +14,7 @@ $letterFont: 700 $letterSize 'Roboto', sans-serif;
   text-align: center;
   padding: 10em;
   color: $letterColor;
+  -webkit-animation-duration: 0.3s;
 
   span {
     font: $letterFont;

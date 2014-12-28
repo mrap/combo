@@ -98,13 +98,33 @@
           }
         }
       }
-
     }
 
     return {
       restrict: 'E',
       scope: {
         lesson: '='
+      },
+      link: link
+    };
+  });
+
+  _module.directive('animateCombo', function() {
+    function link(scope, elem, attrs) {
+      elem.addClass('animated');
+
+      scope.$watch('comboIndex', function(newIdx, oldIdx) {
+        elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          elem.removeClass('fadeInUp');
+        });
+        elem.addClass('fadeInUp');
+      });
+    }
+
+    return {
+      restrict: 'A',
+      scope: {
+        comboIndex: '=animateCombo'
       },
       link: link
     };
