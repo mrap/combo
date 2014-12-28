@@ -23,22 +23,51 @@ var (
 	_sharedWordmap = make(wordpatterns.Wordmap)
 )
 
+const (
+	MinCombosCount = 0
+	MinMaxComboLen = 2
+	MinMinComboLen = 2
+)
+
 func combosHandler(w http.ResponseWriter, req *http.Request) {
 	v := req.URL.Query()
 
 	// Validate query params
+	// chars
 	chars := v.Get("chars")
 	if len(chars) == 0 {
 		w.WriteHeader(400)
 		return
 	}
 
+	// count
 	count, err := strconv.Atoi(v.Get("count"))
 	if err != nil {
 		log.Println(err)
 	}
+	if count < MinCombosCount {
+		count = MinCombosCount
+	}
 
-	combos := RankedCombos(_sharedLookup, chars, 2)
+	// max_len
+	maxLen, err := strconv.Atoi(v.Get("max_len"))
+	if err != nil {
+		log.Println(err)
+	}
+	if maxLen < MinMaxComboLen {
+		maxLen = MinMaxComboLen
+	}
+
+	// min_len
+	minLen, err := strconv.Atoi(v.Get("min_len"))
+	if err != nil {
+		log.Println(err)
+	}
+	if minLen < MinMinComboLen {
+		minLen = MinMinComboLen
+	}
+
+	combos := RankedCombos(_sharedLookup, chars, minLen, maxLen)
 	comboList := GenerateComboList(_sharedWordmap, combos, count)
 
 	data, err := json.Marshal(CombosRes{comboList})
@@ -71,23 +100,29 @@ func CreateCharWordLookup(wm wordpatterns.Wordmap) wordpatterns.Wordmap {
 	return lookup
 }
 
-func CombosWithChars(lookup wordpatterns.Wordmap, chars string, maxLen int) []string {
+func CombosWithChars(lookup wordpatterns.Wordmap, chars string, minLen int, maxLen int) []string {
 	if maxLen < 0 {
 		maxLen = 0
 	}
+	if minLen < 0 {
+		minLen = 0
+	}
+
 	var combos []string
 	sortedChars := stringutil.SortString(chars)
 
 	for _, subsorted := range stringutil.Substrs(sortedChars, 2) {
-		if maxLen > 0 && len(subsorted) <= maxLen {
+		if (minLen != 0 && len(subsorted) < minLen) || (maxLen != 0 && len(subsorted) > maxLen) {
+			continue
+		} else {
 			combos = append(combos, lookup[subsorted]...)
 		}
 	}
 	return combos
 }
 
-func RankedCombos(lookup wordpatterns.Wordmap, chars string, maxLen int) []string {
-	combos := CombosWithChars(lookup, chars, maxLen)
+func RankedCombos(lookup wordpatterns.Wordmap, chars string, minLen, maxLen int) []string {
+	combos := CombosWithChars(lookup, chars, minLen, maxLen)
 	sort.Sort(ByWordCount(combos))
 	return combos
 }

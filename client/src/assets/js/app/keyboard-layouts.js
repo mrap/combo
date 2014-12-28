@@ -28,9 +28,10 @@
   kbLayouts.service('lessonManager', function(kbLayouts){
     var DEFAULT_COUNT = 20;
 
-    function Lesson(chars, maxLen) {
+    function Lesson(chars, minLen, maxLen) {
       this.count = DEFAULT_COUNT;
       this.chars = chars || "";
+      this.min_len = minLen || 2;
       this.max_len = maxLen || 2;
     }
 
@@ -40,9 +41,13 @@
 
       switch (parseInt(level)) {
         case 1:
-          return new Lesson(layout.midL, 2);
+          return new Lesson(layout.midL, 2, 3);
         case 2:
-          return new Lesson(layout.midR, 2);
+          return new Lesson(layout.midR, 2, 3);
+        case 3:
+          return new Lesson(layout.midL, 3, 4);
+        case 4:
+          return new Lesson(layout.midR, 3, 4);
         // TODO: create remaining lessons
         default:
           console.log("No lesson number " + level);
