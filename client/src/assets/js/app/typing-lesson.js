@@ -49,7 +49,7 @@
 
     function link(scope, elem, attrs) {
 
-      scope.$on('keypress', function(e, kd) {
+      var deregKeypress = scope.$on('keypress', function(e, kd) {
         var key = String.fromCharCode(kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
@@ -59,6 +59,11 @@
         } else {
           scope.lesson.restartCurrent();
         }
+      });
+
+      // Clean up
+      scope.$on('$destroy', function() {
+        deregKeypress();
       });
 
     }
