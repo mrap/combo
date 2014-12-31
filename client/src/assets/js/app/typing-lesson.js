@@ -61,11 +61,19 @@
         var letterNode = getComboElem().children()[scope.lesson.letterIdx];
         var letterElem = angular.element(letterNode);
 
-        letterElem.addClass('wrong');
+        // Show actual key pressed in red
+        var copyElem = letterElem.clone()
+                         .text(actual)
+                         .addClass('wrong');
+
+        letterElem.after(copyElem).addClass('hidden');
+
         scope.lesson.restartCurrent();
 
         $timeout(function(){
-          letterElem.removeClass('wrong');
+          // Revert to original
+          copyElem.detach();
+          letterElem.removeClass('hidden');
         }, 500);
       }
 
