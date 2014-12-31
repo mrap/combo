@@ -26,6 +26,7 @@
 
   controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, lessonManager) {
     $scope.lesson = new Lesson();
+    $scope.isLevelComplete = false;
     $scope.selectedLayout = $routeParams.layout;
     $scope.selectedLevel = parseInt($routeParams.level);
 
@@ -39,6 +40,18 @@
     $scope.$watch('selectedLevel', function(cur, prev) {
       if (cur != prev) {
         reloadLesson();
+      }
+    });
+
+    $scope.$watch('isLevelComplete', function(cur) {
+      if (cur) {
+        var deregEnter = $scope.$on('keypress', function(e, kd) {
+          var key = kd.charCode || kd.keyCode;
+          if (key === 13) {
+            deregEnter();
+            $scope.selectedLevel++;
+          }
+        });
       }
     });
 

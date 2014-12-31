@@ -1,7 +1,19 @@
-<typing-lesson lesson="lesson" class="typing-lesson">
-  <div animate-combo="lesson.comboIdx" class="current-combo">
-    <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{current: $index == lesson.letterIdx}">{{letter}}</span>
- </div>
+<typing-lesson lesson="lesson" level-completed="isLevelComplete" ng-switch="isLevelComplete" class="typing-lesson">
+  <div ng-switch-when="true" class="lesson-inner">
+    <h1>Level {{selectedLevel}} completed</h1>
+    Press <span class="key-letter">Enter</span> to continue.
+  </div>
+  <div ng-switch-default>
+    <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
+      <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
+    </current-combo>
+    <div class="combos-left">
+      Combos Left: {{lesson.combos.length - lesson.comboIdx}}
+    </div>
+  </div>
 </typing-lesson>
-<select ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
-<select ng-model="selectedLevel" ng-options="level for level in levelNumbers"></select>
+
+<div class="lesson-nav">
+  <select ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
+  <select ng-model="selectedLevel" ng-options="level for level in levelNumbers"></select>
+</div>

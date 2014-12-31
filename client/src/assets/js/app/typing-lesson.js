@@ -49,10 +49,11 @@
   _module.directive('typingLesson', function($timeout) {
 
     function link(scope, elem, attrs) {
+      scope.isLevelComplete = false;
 
       function correctKey() {
         if (!scope.lesson.next()) {
-          console.log("Completed!");
+          scope.isLevelComplete = true;
         }
       }
 
@@ -69,6 +70,7 @@
       }
 
       var deregKeypress = scope.$on('keypress', function(e, kd) {
+        if (scope.isLevelCompelete) { return; }
         var key = String.fromCharCode(kd.charCode || kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
@@ -87,23 +89,16 @@
       var _comboElem = null;
       function getComboElem() {
         if (_comboElem) { return _comboElem; }
-
-        var children = elem.children();
-
-        for (var i = 0; i < children.length; i++) {
-          var child = angular.element(children[i]);
-          if (child.hasClass('current-combo')) {
-            _comboElem = child;
-            return _comboElem;
-          }
-        }
+        _comboElem = elem.find('current-combo');
+        return _comboElem;
       }
     }
 
     return {
       restrict: 'E',
       scope: {
-        lesson: '='
+        lesson: '=',
+        isLevelComplete: '=levelCompleted'
       },
       link: link
     };
