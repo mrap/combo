@@ -49,6 +49,15 @@ func combosHandler(w http.ResponseWriter, req *http.Request) {
 		count = MinCombosCount
 	}
 
+	// min_len
+	minLen, err := strconv.Atoi(v.Get("min_len"))
+	if err != nil {
+		log.Println(err)
+	}
+	if minLen < MinMinComboLen {
+		minLen = MinMinComboLen
+	}
+
 	// max_len
 	maxLen, err := strconv.Atoi(v.Get("max_len"))
 	if err != nil {
@@ -57,14 +66,8 @@ func combosHandler(w http.ResponseWriter, req *http.Request) {
 	if maxLen < MinMaxComboLen {
 		maxLen = MinMaxComboLen
 	}
-
-	// min_len
-	minLen, err := strconv.Atoi(v.Get("min_len"))
-	if err != nil {
-		log.Println(err)
-	}
-	if minLen < MinMinComboLen {
-		minLen = MinMinComboLen
+	if maxLen < minLen {
+		maxLen = minLen
 	}
 
 	combos := RankedCombos(_sharedLookup, chars, minLen, maxLen)
