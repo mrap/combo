@@ -3,3 +3,5 @@
     <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{current: $index == lesson.letterIdx}">{{letter}}</span>
  </div>
 </typing-lesson>
+<select ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
+<select ng-model="selectedLevel" ng-options="level for level in levelNumbers"></select>

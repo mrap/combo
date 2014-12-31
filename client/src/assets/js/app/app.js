@@ -14,7 +14,7 @@
       controller: 'TyperCtrl'
     }).
       otherwise({
-      redirectTo: '/'
+      redirectTo: '/layout/qwerty/level/1'
     });
   });
 })();
