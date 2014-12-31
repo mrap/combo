@@ -18,6 +18,14 @@ module.exports = function(grunt) {
           dest: 'client/dist/assets/',
         }],
       },
+      materialize: {
+        files: [{
+          expand: true,
+          cwd: 'bower_components/materialize/dist/',
+          src: ['font/**'],
+          dest: 'client/dist/assets/',
+        }],
+      },
     },
     jshint: {
       options: {

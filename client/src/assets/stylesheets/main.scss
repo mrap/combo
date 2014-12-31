@@ -1,16 +1,13 @@
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:700);
-
 html {
   font-size: 14px;
-}
-
-html, body, body > div {
-  height: 100%;
 }
 
 $baseBg: #f9f9f9;
 
 body {
   background-color: $baseBg;
+}
+
+.main-content {
+  margin-top: 20vh;
 }

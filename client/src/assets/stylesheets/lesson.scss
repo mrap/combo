@@ -3,13 +3,7 @@ $currentLetterColor: #268bd2;
 $incorrectLetterColor: #dc322f;
 $letterSize: 8em;
 
-.typing-lesson {
-  width: 100%;
-  height: 100%;
-}
-
 .big-lettered {
-  font-family: 'Roboto', sans-serif;
   font-weight: 700;
 }
 
@@ -25,7 +19,6 @@ $letterSize: 8em;
   @extend .big-lettered;
 
   display: block;
-  padding: 5em 0;
   text-align: center;
 }
 
@@ -36,6 +29,9 @@ $letterSize: 8em;
 
   span {
     font-size: $letterSize;
+    @media only screen and (max-device-width: 480px) {
+      font-size: 5em;
+    }
     padding-left: 5px;
     padding-right: 5px;
   }
@@ -45,7 +41,7 @@ $letterSize: 8em;
   }
 }
 
-.lesson-nav {
-  text-align: center;
+.level-nav {
+  max-width: 250px;
+  margin: 0 auto !important;
 }
-
