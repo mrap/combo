@@ -11,6 +11,10 @@ $letterSize: 8em;
   color: $currentLetterColor;
 }
 
+.completed-message .key-letter {
+  @extend .big-lettered;
+}
+
 .combos-left {
   text-align: center;
 }

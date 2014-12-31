@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col s12">
     <typing-lesson lesson="lesson" level-completed="isLevelComplete" ng-switch="isLevelComplete" class="typing-lesson">
-      <div ng-switch-when="true" class="lesson-inner">
+      <div ng-switch-when="true" class="lesson-inner completed-message">
         <h1>Level {{selectedLevel}} completed</h1>
-        Press <span class="key-letter">Enter</span> to continue.
+        <p class="flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
       </div>
       <div ng-switch-default>
         <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
