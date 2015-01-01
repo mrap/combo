@@ -9,9 +9,12 @@
         <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
           <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
         </current-combo>
-        <div class="combos-left">
-          Combos Left: {{lesson.combos.length - lesson.comboIdx}}
-        </div>
+      </div>
+      <div class="wpm">
+        Combos/min: {{lesson.wpm}}
+      </div>
+      <div ng-hide="isLevelComplete" class="combos-left">
+        Combos Left: {{lesson.combosLeft}}
       </div>
     </typing-lesson>
   </div>

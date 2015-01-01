@@ -11,17 +11,21 @@
       this.comboIdx = 0;
       this.curCombo = "";
       this.curLetter = "";
+      this.combosLeft = 0;
+      this.wpm = null;
     }
 
     Lesson.prototype = {
       _updateVars: function() {
         this.curCombo = this.combos[this.comboIdx];
         this.curLetter = this.curCombo[this.letterIdx];
+        this.combosLeft = this.combos.length - this.comboIdx;
       },
       start: function(combos) {
         this.combos = combos;
         this.letterIdx = 0;
         this.comboIdx = 0;
+        this.wpm = null;
         this._updateVars();
       },
       next: function() {
@@ -46,13 +50,30 @@
   });
 
 
-  _module.directive('typingLesson', function($timeout) {
+  _module.directive('typingLesson', function($timeout, $interval) {
 
     function link(scope, elem, attrs) {
       scope.isLevelComplete = false;
 
+      var wpmTimer = null;
+      var secondsPassed = 0;
+
+      function startWpmTimer() {
+        wpmTimer = $interval(function() {
+          ++secondsPassed;
+          scope.lesson.wpm = ((scope.lesson.comboIdx+1) / 60 * secondsPassed).toFixed(2);
+        }, 1000);
+      }
+
+      function stopWpmTimer() {
+        $interval.cancel(wpmTimer);
+        // Reset Defaults
+        secondsPassed = 0;
+      }
+
       function correctKey() {
         if (!scope.lesson.next()) {
+          stopWpmTimer();
           scope.isLevelComplete = true;
         }
       }
@@ -86,11 +107,15 @@
         } else {
           wrongKey(key);
         }
+        if (wpmTimer === null) {
+          startWpmTimer();
+        }
       });
 
       // Clean up
       scope.$on('$destroy', function() {
         deregKeypress();
+        stopWpmTimer();
       });
 
       // Cache comboElem
