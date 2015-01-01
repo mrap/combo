@@ -1,6 +1,5 @@
-$letterColor: rgba(0, 0, 0, 0.54);
-$currentLetterColor: #268bd2;
-$incorrectLetterColor: #dc322f;
+@import "../../../../bower_components/materialize/sass/components/color";
+
 $letterSize: 8em;
 
 .big-lettered {
@@ -8,7 +7,7 @@ $letterSize: 8em;
 }
 
 .key-letter {
-  color: $currentLetterColor;
+  @extend .blue-text;
 }
 
 .completed-message .key-letter {
@@ -27,7 +26,7 @@ $letterSize: 8em;
 }
 
 .current-combo {
-  color: $letterColor;
+  @extend .blue-grey-text;
   -webkit-animation-duration: 0.3s;
   -moz-animation-duration: 0.3s;
 
@@ -41,7 +40,7 @@ $letterSize: 8em;
   }
 
   .wrong {
-    color: $incorrectLetterColor !important;
+    @extend .red-text;
   }
 }
 
