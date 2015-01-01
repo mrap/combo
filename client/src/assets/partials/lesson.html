@@ -10,7 +10,7 @@
           <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
         </current-combo>
       </div>
-      <div class="wpm">
+      <div ng-show="lesson.wpm" class="wpm">
         Combos/min: {{lesson.wpm}}
       </div>
       <div ng-hide="isLevelComplete" class="combos-left">
