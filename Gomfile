@@ -1,3 +1,0 @@
-gom 'github.com/GeertJohan/go.rice'
-gom 'github.com/mrap/stringutil'
-gom 'github.com/mrap/wordpatterns'

@@ -1,0 +1,27 @@
+{
+	"ImportPath": "github.com/mrap/combo",
+	"GoVersion": "go1.4",
+	"Deps": [
+		{
+			"ImportPath": "bitbucket.org/kardianos/osext",
+			"Comment": "null-15",
+			"Rev": "44140c5fc69ecf1102c5ef451d73cd98ef59b178"
+		},
+		{
+			"ImportPath": "github.com/GeertJohan/go.rice",
+			"Rev": "150a3c9fda3f4296028cf09c1cc071722ea0a707"
+		},
+		{
+			"ImportPath": "github.com/daaku/go.zipexe",
+			"Rev": "44882fc939f4c58d87a60de34796c6cfb9623269"
+		},
+		{
+			"ImportPath": "github.com/mrap/stringutil",
+			"Rev": "7f24dbbf2b605ed511a633639fdb37c8eed1e760"
+		},
+		{
+			"ImportPath": "github.com/mrap/wordpatterns",
+			"Rev": "77832fa6c9eeeea5679155523e2e09dfd69c0ae5"
+		}
+	]
+}
