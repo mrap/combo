@@ -32,7 +32,7 @@
         if (++this.letterIdx >= this.curCombo.length) {
           this.letterIdx = 0;
           if (++this.comboIdx >= this.combos.length) {
-            this.comboIdx = 0;
+            this.comboIdx--; // prevent from going out of bounds
             this._updateVars();
             return false;
           }
@@ -61,7 +61,7 @@
       function startWpmTimer() {
         wpmTimer = $interval(function() {
           ++secondsPassed;
-          scope.lesson.wpm = ((scope.lesson.comboIdx+1) / 60 * secondsPassed).toFixed(2);
+          scope.lesson.wpm = ((scope.lesson.comboIdx+1) / (secondsPassed / 60)).toFixed(2);
         }, 1000);
       }
 
