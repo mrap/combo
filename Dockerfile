@@ -77,6 +77,6 @@ RUN godep restore
 
 RUN go install
 
-ENTRYPOINT combo
+CMD combo
 EXPOSE 8000
 
