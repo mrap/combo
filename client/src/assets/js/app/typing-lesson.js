@@ -167,11 +167,17 @@
   _module.directive('backspaceToastTip', function($document) {
     function link(scope, elem, attr) {
 
-      $document.bind('backspaceKeyDown', function() {
+      var toggleTip = function() {
         if (scope.toastTipEnabled) {
           toast(scope.toastTipText, 3000, '', function() {
           });
         }
+      };
+
+      $document.bind('backspaceKeyDown', toggleTip);
+
+      scope.$on('$destroy', function() {
+        $document.unbind('backspaceKeyDown', toggleTip);
       });
     }
 
