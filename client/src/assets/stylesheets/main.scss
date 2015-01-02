@@ -1,17 +1,5 @@
-html {
-  font-size: 14px;
-}
 
-$baseBg: #f9f9f9;
-
-body {
-  background-color: $baseBg;
-}
-
-.main-content {
-  margin-top: 20vh;
-}
-
-.hidden {
-  display: none;
-}
+@import 'partials/shared';
+@import 'partials/base';
+@import 'partials/home';
+@import 'partials/lesson';

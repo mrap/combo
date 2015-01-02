@@ -24,6 +24,17 @@
     };
   });
 
+  controllers.controller('HomeCtrl', function($scope, $location) {
+    var SPACE_KEYCODE = 13;
+
+    $scope.$on('keypress', function(e, kp) {
+      var key = kp.charCode || kp.keyCode;
+      if (key === SPACE_KEYCODE) {
+        $location.url('/layout/qwerty/level/1');
+      }
+    });
+  });
+
   controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, lessonManager) {
     $scope.lesson = new Lesson();
     $scope.isLevelComplete = false;

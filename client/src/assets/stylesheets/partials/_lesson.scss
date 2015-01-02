@@ -1,14 +1,4 @@
-@import "../../../../bower_components/materialize/sass/components/color";
-
 $letterSize: 8em;
-
-.big-lettered {
-  font-weight: 700;
-}
-
-.key-letter {
-  @extend .blue-text;
-}
 
 .completed-message .key-letter {
   @extend .big-lettered;

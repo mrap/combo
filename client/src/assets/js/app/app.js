@@ -12,8 +12,12 @@
       templateUrl: 'assets/partials/lesson.html',
       controller: 'TyperCtrl'
     }).
+      when('/', {
+      templateUrl: 'assets/partials/home.html',
+      controller: 'HomeCtrl'
+    }).
       otherwise({
-      redirectTo: '/layout/qwerty/level/1'
+      redirectTo: '/'
     });
   });
 })();

@@ -1,0 +1,13 @@
+
+.hero {
+  text-align: center;
+
+  .key-letter {
+    @extend .big-lettered;
+  }
+}
+
+.sub-header {
+  font-weight: 200;
+}
+

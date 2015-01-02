@@ -1,0 +1,18 @@
+
+html {
+  font-size: 14px;
+}
+
+$baseBg: #f9f9f9;
+
+body {
+  background-color: $baseBg;
+}
+
+.main-content {
+  margin-top: 20vh;
+}
+
+.hidden {
+  display: none;
+}
