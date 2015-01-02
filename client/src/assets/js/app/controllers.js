@@ -70,9 +70,16 @@
     loadCombos();
 
     function loadCombos() {
+      var levelParams = levelManager.getLevelParams($scope.selectedLevel, $scope.selectedLayout);
+      // If no level params, go back to lesson 1
+      if (!levelParams) {
+        changeLevel(1);
+        return;
+      }
+
       $http.get(
         '/combos',
-        { params: levelManager.getLevelParams($scope.selectedLevel, $scope.selectedLayout) }
+        { params: levelParams }
       ).success(function(data, status, headers, config) {
         updateLevelNumbers();
         $scope.lesson.start(data.combos);
@@ -90,8 +97,8 @@
       $scope.levelNumbers = numArr;
     }
 
-    function changeLevel() {
-      $location.url('/layout/' + $scope.selectedLayout  + '/level/' + $scope.selectedLevel);
+    function changeLevel(level) {
+      $location.url('/layout/' + $scope.selectedLayout + '/level/' + (level || $scope.selectedLevel));
     }
 
   });
