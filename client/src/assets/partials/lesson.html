@@ -1,32 +1,56 @@
-<div class="row">
-  <div class="col s12">
-    <typing-lesson lesson="lesson" level-completed="isLevelComplete" ng-switch="isLevelComplete" class="typing-lesson">
-      <div ng-switch-when="true" class="lesson-inner completed-message">
-        <h1>Level {{selectedLevel}} completed</h1>
-        <p class="flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
+
+<typing-lesson lesson="lesson" level-completed="isLevelComplete" ng-switch="isLevelComplete" class="typing-lesson">
+
+
+<div ng-switch-when="true" class="completed-message">
+  <h3>Level {{selectedLevel}} results</h3>
+  <div class="divider"></div>
+
+  <div class="lesson-inner">
+    <div class="row stats">
+      <div class="col s6">
+        <div class="accuracy">
+          <div class="stat-value">{{lesson.accuracy}}%</div>
+          <div class="stat-label">Accuracy</div>
+        </div>
       </div>
-      <div ng-switch-default>
-        <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word." toast-tip-enabled="!isLevelComplete">
-        </backspace-toast-tip>
-        <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
-          <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
-        </current-combo>
+      <div class="col s6">
+        <div class="wpm">
+          <div class="stat-value">{{lesson.wpm}}</div>
+          <div class="stat-label">Combos/min</div>
+        </div>
       </div>
-      <div ng-show="lesson.wpm" class="wpm">
-        Combos/min: {{lesson.wpm}}
-      </div>
-      <div ng-hide="isLevelComplete" class="combos-left">
-        Combos Left: {{lesson.combosLeft}}
-      </div>
-    </typing-lesson>
+    </div>
+
+    <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
   </div>
 </div>
 
-<div class="row level-nav">
-  <div class="col s8">
-    <select class="browser-default" ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
+<div ng-switch-default>
+  <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word." toast-tip-enabled="!isLevelComplete">
+  </backspace-toast-tip>
+  <div class="section combos-left" ng-hide="isLevelComplete">
+    {{lesson.combosLeft}} Combos Left
   </div>
-  <div class="col s4">
-    <select class="browser-default" ng-model="selectedLevel" ng-options="level for level in levelNumbers track by level"></select>
+  <div class="divider"></div>
+
+  <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
+  <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
+  </current-combo>
+</div>
+
+</typing-lesson>
+
+<div class="divider"></div>
+
+<div class="section level-nav">
+  <div class="row">
+    <div class="col s8">
+      <select class="browser-default" ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
+    </div>
+    <div class="col s4">
+      <select class="browser-default" ng-model="selectedLevel" ng-options="level for level in levelNumbers track by level"></select>
+    </div>
   </div>
 </div>
+

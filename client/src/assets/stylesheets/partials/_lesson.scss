@@ -1,5 +1,9 @@
 $letterSize: 8em;
 
+.completed-message {
+  text-align: center;
+}
+
 .completed-message .key-letter {
   @extend .big-lettered;
 }
@@ -9,13 +13,13 @@ $letterSize: 8em;
 }
 
 .lesson-inner {
-  @extend .big-lettered;
-
   display: block;
   text-align: center;
+  padding: 2em 0;
 }
 
 .current-combo {
+  @extend .big-lettered;
   @extend .blue-grey-text;
   -webkit-animation-duration: 0.3s;
   -moz-animation-duration: 0.3s;
@@ -37,4 +41,24 @@ $letterSize: 8em;
 .level-nav {
   max-width: 250px;
   margin: 0 auto !important;
+}
+
+.stats {
+  max-width: 460px;
+  margin: 0 auto !important;
+  text-align: center;
+
+  .stat-value {
+    font-weight: 600;
+    font-size: 4em;
+  }
+
+  .stat-label {
+    font-weight: 200;
+    font-size: 1.7em;
+  }
+}
+
+p.completed-prompt {
+  margin-bottom: 0;
 }

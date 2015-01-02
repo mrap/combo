@@ -12,7 +12,10 @@
       this.curCombo = "";
       this.curLetter = "";
       this.combosLeft = 0;
+
+      // Updated in typingLesson directive
       this.wpm = null;
+      this.accuracy = null;
     }
 
     Lesson.prototype = {
@@ -26,13 +29,14 @@
         this.letterIdx = 0;
         this.comboIdx = 0;
         this.wpm = null;
+        this.accuracy = null;
         this._updateVars();
       },
       next: function() {
         if (++this.letterIdx >= this.curCombo.length) {
           this.letterIdx = 0;
           if (++this.comboIdx >= this.combos.length) {
-            this.comboIdx--; // prevent from going out of bounds
+            this.comboIdx = 0; // prevent from going out of bounds
             this._updateVars();
             return false;
           }
@@ -104,6 +108,10 @@
         }, 500);
       }
 
+      // Track accuracy
+      var charCount = 0;
+      var wrongCount = 0;
+
       var deregKeypress = scope.$on('keypress', function(e, kd) {
         if (scope.isLevelCompelete) { return; }
         var key = String.fromCharCode(kd.charCode || kd.keyCode);
@@ -112,7 +120,13 @@
           correctKey();
         } else {
           wrongKey(key);
+          ++wrongCount;
         }
+
+        // Update Accuracy
+        ++charCount;
+        scope.lesson.accuracy = (((charCount - wrongCount) / charCount) * 100).toFixed(2);
+
         if (wpmTimer === null) {
           startWpmTimer();
         }
