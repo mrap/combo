@@ -78,7 +78,13 @@
         }
       }
 
+      var wrongKeyExp = new RegExp('[a-zA-Z]', 'i');
       function wrongKey(actual) {
+        // Only change ui if actual key is alphabetical
+        if (!wrongKeyExp.test(actual)) {
+          return;
+        }
+
         var letterNode = getComboElem().children()[scope.lesson.letterIdx];
         var letterElem = angular.element(letterNode);
 
