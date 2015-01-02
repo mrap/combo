@@ -157,4 +157,25 @@
       link: link
     };
   });
+
+  _module.directive('backspaceToastTip', function($document) {
+    function link(scope, elem, attr) {
+
+      $document.bind('backspaceKeyDown', function() {
+        if (scope.toastTipEnabled) {
+          toast(scope.toastTipText, 3000, '', function() {
+          });
+        }
+      });
+    }
+
+    return {
+      restrict: 'E',
+      scope: {
+        toastTipEnabled: '=',
+        toastTipText: '@'
+      },
+      link: link
+    };
+  });
 })();

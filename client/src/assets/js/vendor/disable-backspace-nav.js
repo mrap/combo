@@ -3,6 +3,8 @@
 (function() {
   "use strict";
 
+  var backspaceKeyDown = new Event('backspaceKeyDown');
+
   document.onkeydown = function (event) {
 
     if (!event) { /* This will happen in IE */
@@ -21,6 +23,8 @@
         alert("prevented");
         event.returnValue = false;
       }
+
+      document.dispatchEvent(backspaceKeyDown);
 
       return false;
     }

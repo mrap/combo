@@ -6,6 +6,8 @@
         <p class="flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
       </div>
       <div ng-switch-default>
+        <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word." toast-tip-enabled="!isLevelComplete">
+        </backspace-toast-tip>
         <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
           <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
         </current-combo>
