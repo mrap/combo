@@ -6,14 +6,14 @@
     'typingLessonModule'
   ]);
 
-  controllers.controller('MainCtrl', function($rootScope, $scope, kbLayouts, lessonManager) {
+  controllers.controller('MainCtrl', function($rootScope, $scope, kbLayouts, levelManager) {
     var DEFAULT_LAYOUT = "qwerty";
     var DEFAULT_LEVEL = 1;
 
     $scope.selectedLevel = DEFAULT_LEVEL;
     $scope.selectedLayout = DEFAULT_LAYOUT;
     $scope.layouts = kbLayouts.layouts;
-    $scope.levelNumbers = lessonManager.levelNumbers;
+    $scope.levelNumbers = levelManager.levelNumbers;
 
     $rootScope.rootKeyDown = function(e) {
       $rootScope.$broadcast('keydown', e);
@@ -35,22 +35,23 @@
     });
   });
 
-  controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, lessonManager) {
+  controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, levelManager) {
     $scope.lesson = new Lesson();
     $scope.isLevelComplete = false;
     $scope.selectedLayout = $routeParams.layout;
     $scope.selectedLevel = parseInt($routeParams.level);
+    $scope.levelNumbers = [];
 
     // Update page when layout or level changes
     $scope.$watch('selectedLayout', function(cur, prev) {
       if (cur != prev) {
-        reloadLesson();
+        changeLevel();
       }
     });
 
     $scope.$watch('selectedLevel', function(cur, prev) {
       if (cur != prev) {
-        reloadLesson();
+        changeLevel();
       }
     });
 
@@ -71,16 +72,26 @@
     function loadCombos() {
       $http.get(
         '/combos',
-        { params: lessonManager.getLessonParams($scope.selectedLevel, $scope.selectedLayout) }
+        { params: levelManager.getLevelParams($scope.selectedLevel, $scope.selectedLayout) }
       ).success(function(data, status, headers, config) {
+        updateLevelNumbers();
         $scope.lesson.start(data.combos);
       }).error(function(data, status, headers, config) {
         console.log("Error requesting /combos");
       });
     }
 
-    function reloadLesson() {
-      $location.path("/layout/"+$scope.selectedLayout+"/level/"+$scope.selectedLevel);
+    function updateLevelNumbers() {
+      var total = levelManager.layoutLevels[$scope.selectedLayout].length;
+      var numArr = [];
+      for (var i = total; i > 0; --i) {
+        numArr[i-1] = i;
+      }
+      $scope.levelNumbers = numArr;
+    }
+
+    function changeLevel() {
+      $location.url('/layout/' + $scope.selectedLayout  + '/level/' + $scope.selectedLevel);
     }
 
   });

@@ -27,6 +27,6 @@
     <select class="browser-default" ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
   </div>
   <div class="col s4">
-    <select class="browser-default" ng-model="selectedLevel" ng-options="level for level in levelNumbers"></select>
+    <select class="browser-default" ng-model="selectedLevel" ng-options="level for level in levelNumbers track by level"></select>
   </div>
 </div>

@@ -35,53 +35,72 @@
     };
   });
 
-  kbLayouts.service('lessonManager', function(kbLayouts){
-    var DEFAULT_COUNT = 20;
-    var MIN_LEVEL = 1;
-    var MAX_LEVEL = 9;
+  kbLayouts.service('levelManager', function(kbLayouts){
+    this.layoutLevels = {};
 
-    function Lesson(chars, minLen, maxLen) {
+    // Takes a level parameter that is min level 1
+    this.getLevelParams = function(level, layoutName) {
+      var levelNum = parseInt(level)-1; // actual array is 0 indexed
+      // Check if already cached
+      if (this.layoutLevels[layoutName]) {
+        return this.layoutLevels[layoutName][levelNum];
+      }
+
+      // Verify layout exists
+      var l = kbLayouts.getLayout(layoutName);
+      if (!l) { return null; }
+
+      // Build layout's levels
+      this.layoutLevels[layoutName] = [
+        // Home row
+        new Level(2, 3, [l.midL, l.midR]),
+        new Level(3, 4, [l.midL, l.midR]),
+        new Level(2, 6, [l.midL, l.midR]),
+        // home row + top left
+        new Level(2, 3, [l.midL, l.midR, l.topL]),
+        new Level(3, 4, [l.midL, l.midR, l.topL]),
+        new Level(2, 6, [l.midL, l.midR, l.topL]),
+        // home row + top right
+        new Level(2, 3, [l.midL, l.midR, l.topR]),
+        new Level(3, 4, [l.midL, l.midR, l.topR]),
+        new Level(2, 6, [l.midL, l.midR, l.topR]),
+        // home + top rows
+        new Level(2, 3, [l.midL, l.midR, l.topL, l.topR]),
+        new Level(3, 4, [l.midL, l.midR, l.topL, l.topR]),
+        new Level(2, 6, [l.midL, l.midR, l.topL, l.topR]),
+        // home row + bottom left
+        new Level(2, 3, [l.midL, l.midR, l.botL]),
+        new Level(3, 4, [l.midL, l.midR, l.botL]),
+        new Level(2, 6, [l.midL, l.midR, l.botL]),
+        // home row + bottom right
+        new Level(2, 3, [l.midL, l.midR, l.botR]),
+        new Level(3, 4, [l.midL, l.midR, l.botR]),
+        new Level(2, 6, [l.midL, l.midR, l.botR]),
+        // home + bottom rows
+        new Level(2, 3, [l.midL, l.midR, l.botL, l.botR]),
+        new Level(3, 4, [l.midL, l.midR, l.botL, l.botR]),
+        new Level(2, 6, [l.midL, l.midR, l.botL, l.botR]),
+        // all rows
+        new Level(2, 3, [l.midL, l.midR, l.topL, l.topR, l.botL, l.botR]),
+        new Level(3, 4, [l.midL, l.midR, l.topL, l.topR, l.botL, l.botR]),
+        new Level(2, 6, [l.midL, l.midR, l.topL, l.topR, l.botL, l.botR])
+      ];
+
+      return this.layoutLevels[layoutName][levelNum];
+    };
+
+    var DEFAULT_COUNT = 20;
+
+    function Level(minLen, maxLen, charGroups) {
       this.count = DEFAULT_COUNT;
-      this.chars = chars || "";
       this.min_len = minLen || 2;
       this.max_len = maxLen || 2;
+
+      this.chars = '';
+      charGroups.forEach(function(chars) {
+        this.chars += chars;
+      }, this);
     }
-
-
-    this.levelNumbers = [];
-    for (var i = MIN_LEVEL; i <= MAX_LEVEL; i++) {
-      this.levelNumbers.push(i);
-    }
-
-    this.getLessonParams = function(level, layoutName) {
-      var layout = kbLayouts.getLayout(layoutName);
-      if (!layout) { return null; }
-
-      switch (parseInt(level)) {
-        case 1:
-          return new Lesson(layout.midL+layout.midR, 2, 3);
-        case 2:
-          return new Lesson(layout.midL+layout.midR, 2, 5);
-        case 3:
-          return new Lesson(layout.midL+layout.midR+layout.topL, 2, 3);
-        case 4:
-          return new Lesson(layout.midL+layout.midR+layout.topR, 2, 3);
-        case 5:
-          return new Lesson(layout.midL+layout.midR+layout.topL+layout.topR, 3, 5);
-        case 6:
-          return new Lesson(layout.midL+layout.midR+layout.botL, 2, 3);
-        case 7:
-          return new Lesson(layout.midL+layout.midR+layout.botR, 2, 3);
-        case 8:
-          return new Lesson(layout.midL+layout.midR+layout.botL+layout.botR, 3, 5);
-        case 9:
-          return new Lesson(layout.midL+layout.midR+layout.topL+layout.topR+layout.botL+layout.botR, 3, 5);
-        // TODO: create remaining lessons
-        default:
-          console.log("No lesson number " + level);
-        return null;
-      }
-    };
 
   });
 })();
