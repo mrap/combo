@@ -3,8 +3,16 @@
 
   var _module = angular.module('typingLessonModule', []);
 
-  _module.factory('Lesson', function() {
+  _module.factory('LevelStates', function() {
+    return {
+      NotReady: 'NotReady',
+      Pre: 'Pre',
+      Running: 'Running',
+      Post: 'Post'
+    };
+  });
 
+  _module.factory('Lesson', function(LevelStates) {
     function Lesson() {
       this.combos = [];
       this.letterIdx = 0;
@@ -12,6 +20,7 @@
       this.curCombo = "";
       this.curLetter = "";
       this.combosLeft = 0;
+      this.state = LevelStates.NotReady;
 
       // Updated in typingLesson directive
       this.wpm = null;
@@ -24,12 +33,26 @@
         this.curLetter = this.curCombo[this.letterIdx];
         this.combosLeft = this.combos.length - this.comboIdx;
       },
-      start: function(combos) {
+      loadCombos: function(combos) {
+        if (!combos) {
+          console.log("Lesson cannot load without any combos!");
+          return;
+        }
+
         this.combos = combos;
+        this.state = LevelStates.Pre;
+      },
+      start: function() {
+        if (!this.combos) {
+          console.log("Lesson cannot start without any combos!");
+          return;
+        }
+
         this.letterIdx = 0;
         this.comboIdx = 0;
         this.wpm = null;
         this.accuracy = null;
+        this.state = LevelStates.Running;
         this._updateVars();
       },
       next: function() {
@@ -37,6 +60,7 @@
           this.letterIdx = 0;
           if (++this.comboIdx >= this.combos.length) {
             this.comboIdx = 0; // prevent from going out of bounds
+            this.state = LevelStates.Post;
             this._updateVars();
             return false;
           }
@@ -54,13 +78,20 @@
   });
 
 
-  _module.directive('typingLesson', function($timeout, $interval) {
+  _module.directive('typingLesson', function($timeout, $interval, LevelStates) {
 
     function link(scope, elem, attrs) {
-      scope.isLevelComplete = false;
-
       var wpmTimer = null;
       var secondsPassed = 0;
+
+      var levelStartWatch = scope.$watch('lesson.state', function(curState) {
+        if (curState === LevelStates.Running) {
+          if (wpmTimer === null) {
+            levelStartWatch(); // deregister watch since level will only begin once
+            startWpmTimer();
+          }
+        }
+      });
 
       function startWpmTimer() {
         wpmTimer = $interval(function() {
@@ -78,7 +109,6 @@
       function correctKey() {
         if (!scope.lesson.next()) {
           stopWpmTimer();
-          scope.isLevelComplete = true;
         }
       }
 
@@ -113,7 +143,10 @@
       var wrongCount = 0;
 
       var deregKeypress = scope.$on('keypress', function(e, kd) {
-        if (scope.isLevelCompelete) { return; }
+        if (scope.lesson.state != LevelStates.Running) {
+          return;
+        }
+
         var key = String.fromCharCode(kd.charCode || kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
@@ -126,10 +159,6 @@
         // Update Accuracy
         ++charCount;
         scope.lesson.accuracy = (((charCount - wrongCount) / charCount) * 100).toFixed(2);
-
-        if (wpmTimer === null) {
-          startWpmTimer();
-        }
       });
 
       // Clean up
@@ -151,7 +180,6 @@
       restrict: 'E',
       scope: {
         lesson: '=',
-        isLevelComplete: '=levelCompleted'
       },
       link: link
     };
@@ -198,7 +226,6 @@
     return {
       restrict: 'E',
       scope: {
-        toastTipEnabled: '=',
         toastTipText: '@'
       },
       link: link

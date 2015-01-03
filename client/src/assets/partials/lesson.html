@@ -1,44 +1,51 @@
 
-<typing-lesson lesson="lesson" level-completed="isLevelComplete" ng-switch="isLevelComplete" class="typing-lesson">
+<typing-lesson lesson="lesson" ng-switch="lesson.state" class="typing-lesson">
 
+  <div ng-switch-when="Post" class="completed-message">
+    <h3>Level {{selectedLevel}} results</h3>
+    <div class="divider"></div>
 
-<div ng-switch-when="true" class="completed-message">
-  <h3>Level {{selectedLevel}} results</h3>
-  <div class="divider"></div>
-
-  <div class="lesson-inner">
-    <div class="row stats">
-      <div class="col s6">
-        <div class="accuracy">
-          <div class="stat-value">{{lesson.accuracy}}%</div>
-          <div class="stat-label">Accuracy</div>
+    <div class="lesson-inner">
+      <div class="row stats">
+        <div class="col s6">
+          <div class="accuracy">
+            <div class="stat-value">{{lesson.accuracy}}%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="wpm">
+            <div class="stat-value">{{lesson.wpm}}</div>
+            <div class="stat-label">Combos/min</div>
+          </div>
         </div>
       </div>
-      <div class="col s6">
-        <div class="wpm">
-          <div class="stat-value">{{lesson.wpm}}</div>
-          <div class="stat-label">Combos/min</div>
-        </div>
-      </div>
+
+      <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
     </div>
-
-    <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
   </div>
-</div>
 
-<div ng-switch-default>
-  <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word." toast-tip-enabled="!isLevelComplete">
-  </backspace-toast-tip>
-  <div class="section combos-left" ng-hide="isLevelComplete">
-    {{lesson.combosLeft}} Combos Left
+  <div ng-switch-when="Running">
+    <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word.">
+    </backspace-toast-tip>
+    <div class="section combos-left">
+      {{lesson.combosLeft}} Combos Left
+    </div>
+    <div class="divider"></div>
+
+    <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
+    <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
+    </current-combo>
   </div>
-  <div class="divider"></div>
 
-  <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
-  <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
-  </current-combo>
-</div>
+  <div ng-switch-default class="completed-message">
+    <div class="divider"></div>
 
+    <div class="lesson-inner">
+      <h3>Level {{selectedLevel}}</h3>
+      <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to begin.</p>
+    </div>
+  </div>
 </typing-lesson>
 
 <div class="divider"></div>

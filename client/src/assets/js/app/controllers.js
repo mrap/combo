@@ -35,12 +35,12 @@
     });
   });
 
-  controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, levelManager) {
+  controllers.controller('TyperCtrl', function($scope, $location, $routeParams, $http, Lesson, levelManager, LevelStates) {
     $scope.lesson = new Lesson();
-    $scope.isLevelComplete = false;
     $scope.selectedLayout = $routeParams.layout;
     $scope.selectedLevel = parseInt($routeParams.level);
     $scope.levelNumbers = [];
+    $scope.LevelStates = LevelStates;
 
     // Update page when layout or level changes
     $scope.$watch('selectedLayout', function(cur, prev) {
@@ -55,15 +55,28 @@
       }
     });
 
-    $scope.$watch('isLevelComplete', function(cur) {
-      if (cur) {
-        var deregEnter = $scope.$on('keypress', function(e, kd) {
-          var key = kd.charCode || kd.keyCode;
-          if (key === 13) {
-            deregEnter();
+    function keypressEnterOnce(callback) {
+      var deregEnter = $scope.$on('keypress', function(e, kd) {
+        var key = kd.charCode || kd.keyCode;
+        if (key === 13) {
+          deregEnter();
+          callback();
+        }
+      });
+    }
+
+    $scope.$watch('lesson.state', function(curState) {
+      switch (curState) {
+        case LevelStates.Pre:
+          keypressEnterOnce(function() {
+            $scope.lesson.start();
+          });
+          break;
+        case LevelStates.Post:
+          keypressEnterOnce(function() {
             $scope.selectedLevel++;
-          }
-        });
+          });
+          break;
       }
     });
 
@@ -82,7 +95,7 @@
         { params: levelParams }
       ).success(function(data, status, headers, config) {
         updateLevelNumbers();
-        $scope.lesson.start(data.combos);
+        $scope.lesson.loadCombos(data.combos);
       }).error(function(data, status, headers, config) {
         console.log("Error requesting /combos");
       });
