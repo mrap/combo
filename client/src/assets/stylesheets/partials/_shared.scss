@@ -1,11 +1,12 @@
 
 @import '../../../../../bower_components/materialize/sass/components/color';
 
-.key-letter {
-  @extend .blue-text;
-}
-
 .big-lettered {
   font-weight: 700;
+}
+
+.pressable-key {
+  @extend .big-lettered;
+  @extend .blue-text;
 }
 

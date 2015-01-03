@@ -1,14 +1,6 @@
 $letterSize: 8em;
 
-.completed-message {
-  text-align: center;
-}
-
-.completed-message .key-letter {
-  @extend .big-lettered;
-}
-
-.combos-left, .wpm {
+.lesson-header {
   text-align: center;
 }
 
@@ -59,6 +51,6 @@ $letterSize: 8em;
   }
 }
 
-p.completed-prompt {
+p.lesson-prompt {
   margin-bottom: 0;
 }

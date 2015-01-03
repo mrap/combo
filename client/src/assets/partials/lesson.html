@@ -1,8 +1,10 @@
 
 <typing-lesson lesson="lesson" ng-switch="lesson.state" class="typing-lesson">
 
-  <div ng-switch-when="Post" class="completed-message">
-    <h3>Level {{selectedLevel}} results</h3>
+  <div ng-switch-when="Post">
+    <div class="lesson-header">
+      <h3>Level {{selectedLevel}} results</h3>
+    </div>
     <div class="divider"></div>
 
     <div class="lesson-inner">
@@ -21,29 +23,32 @@
         </div>
       </div>
 
-      <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to continue.</p>
+      <p class="lesson-prompt flow-text">Press <span class="pressable-key">Enter</span> to continue.</p>
     </div>
   </div>
 
   <div ng-switch-when="Running">
     <backspace-toast-tip toast-tip-text="No backspacing! Mistakes reset the current word.">
     </backspace-toast-tip>
-    <div class="section combos-left">
-      {{lesson.combosLeft}} Combos Left
+
+    <div class="lesson-header">
+      <div class="section">
+        {{lesson.combosLeft}} Combos Left
+      </div>
     </div>
     <div class="divider"></div>
 
     <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
-    <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'key-letter': $index == lesson.letterIdx}">{{letter}}</span>
+    <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'pressable-key': $index == lesson.letterIdx}">{{letter}}</span>
     </current-combo>
   </div>
 
-  <div ng-switch-default class="completed-message">
+  <div ng-switch-default>
     <div class="divider"></div>
 
     <div class="lesson-inner">
       <h3>Level {{selectedLevel}}</h3>
-      <p class="continue-prompt flow-text">Press <span class="key-letter">Enter</span> to begin.</p>
+      <p class="lesson-prompt flow-text">Press <span class="pressable-key">Enter</span> to begin.</p>
     </div>
   </div>
 </typing-lesson>
