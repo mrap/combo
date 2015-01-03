@@ -210,10 +210,7 @@
     function link(scope, elem, attr) {
 
       var toggleTip = function() {
-        if (scope.toastTipEnabled) {
-          toast(scope.toastTipText, 3000, '', function() {
-          });
-        }
+        toast(scope.toastTipText, 3000);
       };
 
       $document.bind('backspaceKeyDown', toggleTip);
