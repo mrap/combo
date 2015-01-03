@@ -62,6 +62,9 @@ RUN go get github.com/tools/godep
 ADD . /gopath/src/github.com/mrap/combo
 
 # Setup Project
+# Allow container to use ssh keys
+RUN  echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
+
 # Define working directory.
 WORKDIR /gopath/src/github.com/mrap/combo
 
