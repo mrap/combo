@@ -105,7 +105,7 @@
           // Revert to original
           copyElem.detach();
           letterElem.removeClass('hidden');
-        }, 500);
+        }, 200);
       }
 
       // Track accuracy
