@@ -16,12 +16,41 @@
 			"Rev": "44882fc939f4c58d87a60de34796c6cfb9623269"
 		},
 		{
+			"ImportPath": "github.com/garyburd/redigo/internal",
+			"Rev": "3235c235f38bd5b41bd9eef26edbfad396be6274"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/redis",
+			"Rev": "3235c235f38bd5b41bd9eef26edbfad396be6274"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "14f550f51af52180c2eefed15e5fd18d63c0a64a"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "e444e69cbd2e2e3e0749a2f3c717cec491552bbf"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "f0559d009e6943011cd1ba6eb16195cf5e0ed326"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "aa5e036e6c44aec69a32eb41097001978b29ad31"
+		},
+		{
 			"ImportPath": "github.com/mrap/stringutil",
 			"Rev": "7f24dbbf2b605ed511a633639fdb37c8eed1e760"
 		},
 		{
 			"ImportPath": "github.com/mrap/wordpatterns",
 			"Rev": "77832fa6c9eeeea5679155523e2e09dfd69c0ae5"
+		},
+		{
+			"ImportPath": "gopkg.in/boj/redistore.v1",
+			"Comment": "v1",
+			"Rev": "9d1554b400d726c7aa54b6e4a836f273b72b97f7"
 		}
 	]
 }
