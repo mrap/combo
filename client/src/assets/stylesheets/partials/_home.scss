@@ -11,3 +11,11 @@
   font-weight: 200;
 }
 
+.questions {
+
+  .header {
+    @media not all and (max-width: 600px) {
+      float: right;
+    }
+  }
+}
