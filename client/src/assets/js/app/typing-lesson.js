@@ -13,6 +13,9 @@
   });
 
   _module.factory('Lesson', function(LevelStates) {
+    var MIN_PASSING_ACCURACY = 90,
+        MIN_PASSING_WPM      = 30;
+
     function Lesson() {
       this.combos = [];
       this.letterIdx = 0;
@@ -71,6 +74,9 @@
       restartCurrent: function() {
         this.letterIdx = 0;
         this._updateVars();
+      },
+      isPassable: function() {
+        return this.accuracy >= MIN_PASSING_ACCURACY && this.wpm >= MIN_PASSING_WPM;
       }
     };
 
@@ -112,13 +118,7 @@
         }
       }
 
-      var wrongKeyExp = new RegExp('[a-zA-Z]', 'i');
       function wrongKey(actual) {
-        // Only change ui if actual key is alphabetical
-        if (!wrongKeyExp.test(actual)) {
-          return;
-        }
-
         var letterNode = getComboElem().children()[scope.lesson.letterIdx];
         var letterElem = angular.element(letterNode);
 
@@ -142,12 +142,15 @@
       var charCount = 0;
       var wrongCount = 0;
 
+      // Only react to alphabetical keys
+      var wrongKeyExp = new RegExp('[a-zA-Z]', 'i');
+
       var deregKeypress = scope.$on('keypress', function(e, kd) {
-        if (scope.lesson.state != LevelStates.Running) {
+        var key = String.fromCharCode(kd.charCode || kd.keyCode);
+
+        if (scope.lesson.state != LevelStates.Running || !wrongKeyExp.test(key)) {
           return;
         }
-
-        var key = String.fromCharCode(kd.charCode || kd.keyCode);
 
         if (key === scope.lesson.curLetter) {
           correctKey();
@@ -157,8 +160,8 @@
         }
 
         // Update Accuracy
-        ++charCount;
-        scope.lesson.accuracy = (((charCount - wrongCount) / charCount) * 100).toFixed(2);
+        var correctCount = ++charCount - wrongCount;
+        scope.lesson.accuracy = (correctCount / charCount * 100).toFixed(2);
       });
 
       // Clean up
@@ -179,7 +182,7 @@
     return {
       restrict: 'E',
       scope: {
-        lesson: '=',
+        lesson: '='
       },
       link: link
     };

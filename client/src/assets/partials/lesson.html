@@ -2,8 +2,9 @@
 <typing-lesson lesson="lesson" ng-switch="lesson.state" class="typing-lesson">
 
   <div ng-switch-when="Post">
-    <div class="lesson-header">
-      <h3>Level {{selectedLevel}} results</h3>
+    <div class="lesson-header" ng-switch="didUserPass()">
+      <h3 ng-switch-when="true">Level {{selectedLevel}} mastered!</h3>
+      <h3 ng-switch-default>Level {{selectedLevel}} needs improvement</h3>
     </div>
     <div class="divider"></div>
 
@@ -23,7 +24,14 @@
         </div>
       </div>
 
-      <p class="lesson-prompt flow-text">Press <span class="pressable-key">Enter</span> to continue.</p>
+      <div ng-switch="didUserPass()">
+        <div ng-switch-when="true">
+          <p class="lesson-prompt flow-text"><span class="pressable-key">r</span> to retry, <span class="pressable-key">Enter</span> to continue.</p>
+        </div>
+        <div ng-switch-default>
+          <p class="lesson-prompt flow-text"><span class="pressable-key">r</span> to retry.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -58,7 +66,7 @@
 <div class="section level-nav">
   <div class="row">
     <div class="col s8">
-      <select class="browser-default" ng-model="selectedLayout" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
+      <select class="browser-default" ng-model="currentUser.layout.name" ng-options="layoutName as layoutName for (layoutName, v) in layouts"></select>
     </div>
     <div class="col s4">
       <select class="browser-default" ng-model="selectedLevel" ng-options="level for level in levelNumbers track by level"></select>

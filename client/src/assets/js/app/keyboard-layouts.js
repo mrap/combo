@@ -6,6 +6,7 @@
   kbLayouts.service('kbLayouts', function(){
     var _layouts = {
       colemak: {
+        name: "colemak",
         topL: "qwfpg",
         midL: "arstd",
         botL: "zxcvb",
@@ -14,6 +15,7 @@
         botR: "km"
       },
       qwerty: {
+        name: "qwerty",
         topL: "qwerty",
         midL: "asdfg",
         botL: "zxcvb",
@@ -89,7 +91,7 @@
       return this.layoutLevels[layoutName][levelNum];
     };
 
-    var DEFAULT_COUNT = 20;
+    var DEFAULT_COUNT = 3;
 
     function Level(minLen, maxLen, charGroups) {
       this.count = DEFAULT_COUNT;
