@@ -4,7 +4,10 @@
   <div ng-switch-when="Post">
     <div class="lesson-header" ng-switch="didUserPass()">
       <h3 ng-switch-when="true">Level {{selectedLevel}} mastered!</h3>
-      <h3 ng-switch-default>Level {{selectedLevel}} needs improvement</h3>
+      <div ng-switch-default>
+        <h3>Level {{selectedLevel}} not yet mastered</h3>
+        <span>Improve your results to continue to the next level</span>
+      </div>
     </div>
     <div class="divider"></div>
 
