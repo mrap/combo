@@ -89,9 +89,6 @@ RUN \
 # Define working directory.
       WORKDIR /data
 
-# Start Redis in background (port 6379)
-      RUN redis-server /etc/redis/redis.conf &
-
 # Setup Project
 # Allow container to use ssh keys
 RUN  echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
@@ -111,6 +108,11 @@ RUN godep restore
 
 RUN go install
 
+# Start Redis in background (port 6379)
+RUN redis-server /etc/redis/redis.conf &
+
+# Start the app
 CMD combo
+
 EXPOSE 8000
 
