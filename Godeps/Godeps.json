@@ -48,6 +48,10 @@
 			"Rev": "77832fa6c9eeeea5679155523e2e09dfd69c0ae5"
 		},
 		{
+			"ImportPath": "github.com/nu7hatch/gouuid",
+			"Rev": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
+		},
+		{
 			"ImportPath": "gopkg.in/boj/redistore.v1",
 			"Comment": "v1",
 			"Rev": "9d1554b400d726c7aa54b6e4a836f273b72b97f7"
