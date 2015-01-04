@@ -2,14 +2,20 @@
   "use strict";
 
   var userModule = angular.module('userModule', [
-    'kbLayoutsModule'
+    'kbLayoutsModule',
+    'ngCookies'
   ]);
 
-  userModule.factory('User', function(kbLayouts) {
+  userModule.factory('User', function($cookies, $http, kbLayouts) {
 
     function User() {
+      this.uid = $cookies.analyticsID;
       this.layout = null;
       this.layoutMaxLevel = {};
+      if ($cookies.UserLevelProgress) {
+        var decoded = atob($cookies.UserLevelProgress);
+        this.layoutMaxLevel = JSON.parse(decoded);
+      }
 
       this.setLayout('qwerty');
     }
@@ -30,6 +36,15 @@
       },
       setMaxLayoutLevel: function(layoutName, level) {
         this.layoutMaxLevel[layoutName] = level;
+        var url = '/users/' + this.uid + '/level_progress';
+        $http.put(
+          url,
+          this.layoutMaxLevel
+        ).success(function(data, status, headers, config) {
+
+        }).error(function(data, status, headers, config) {
+          console.log("Error:", url, status, data);
+        });
       },
       getMaxLayoutLevel: function(layoutName) {
         return this.layoutMaxLevel[layoutName];

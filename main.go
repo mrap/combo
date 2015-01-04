@@ -29,29 +29,26 @@ func main() {
 	defer store.Close()
 
 	// Server setup
+
+	// Setup assets route
 	box := rice.MustFindBox("client/dist/assets")
 	assetsFileServer := http.StripPrefix("/assets/", http.FileServer(box.HTTPBox()))
+	http.Handle("/assets/", assetsFileServer)
 
 	// Routes
 	router := mux.NewRouter()
-	router.Handle("/assets/", assetsFileServer)
 	router.HandleFunc("/combos", combosHandler)
+	router.HandleFunc("/users/{id}/level_progress", updateUserLevelProgress).
+		Methods("PUT")
 	router.HandleFunc("/", homeHandler)
-	http.Handle("/", router)
+
+	// Attach middleware
+	http.Handle("/", sessionMiddleware(analyticsUUIDMiddleware(router)))
 
 	http.ListenAndServe(":8000", nil)
 }
 
 func homeHandler(w http.ResponseWriter, req *http.Request) {
-	session, err := store.Get(req, "session-key")
-	if err != nil {
-		log.Println(err.Error())
-	}
-
-	if err = session.Save(req, w); err != nil {
-		log.Println("Error saving session", err.Error())
-	}
-
 	if err := HomeTpl.Execute(w, nil); err != nil {
 		log.Fatal(err)
 		return

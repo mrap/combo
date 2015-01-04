@@ -3,7 +3,8 @@
 
   var app = angular.module('typeApp', [
     'ngRoute',
-    'appControllers'
+    'appControllers',
+    'angular-google-analytics'
   ]);
 
   app.config(function ($routeProvider){
@@ -19,6 +20,20 @@
       otherwise({
       redirectTo: '/'
     });
+  });
+
+  app.config(function (AnalyticsProvider) {
+    var ngCookies = angular.injector(['ngCookies']);
+    var $cookies  = ngCookies.get('$cookies');
+    var userID = $cookies.analyticsID;
+    AnalyticsProvider.setAccount('UA-40417328-2', { 'userId': userID });
+    AnalyticsProvider.trackPages(true);
+    AnalyticsProvider.useAnalytics(true);
+  });
+
+  app.run(function(Analytics) {
+    // In case you are relying on automatic page tracking, you need to inject Analytics
+    // at least once in your application (for example in the main run() block)
   });
 
   app.service('appRouter', function($location, $route) {
