@@ -91,7 +91,7 @@
       return this.layoutLevels[layoutName][levelNum];
     };
 
-    var DEFAULT_COUNT = 3;
+    var DEFAULT_COUNT = 20;
 
     function Level(minLen, maxLen, charGroups) {
       this.count = DEFAULT_COUNT;
