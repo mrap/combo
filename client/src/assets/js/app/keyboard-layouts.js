@@ -8,19 +8,19 @@
       colemak: {
         name: "colemak",
         topL: "qwfpg",
-        midL: "arstd",
-        botL: "zxcvb",
         topR: "jluy",
+        midL: "arstd",
         midR: "hneio",
+        botL: "zxcvb",
         botR: "km"
       },
       qwerty: {
         name: "qwerty",
-        topL: "qwerty",
+        topL: "qwert",
+        topR: "yuiop",
         midL: "asdfg",
-        botL: "zxcvb",
-        topR: "uiop",
         midR: "hjkl",
+        botL: "zxcvb",
         botR: "nm"
       }
     };
