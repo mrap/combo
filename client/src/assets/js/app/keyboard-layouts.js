@@ -14,6 +14,15 @@
         botL: "zxcvb",
         botR: "km"
       },
+      dvorak: {
+        name: "dvorak",
+        topL: "py",
+        topR: "fgcrl",
+        midL: "aoeui",
+        midR: "dhtns",
+        botL: "qjkxb",
+        botR: "mwvz"
+      },
       qwerty: {
         name: "qwerty",
         topL: "qwert",
