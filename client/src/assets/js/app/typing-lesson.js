@@ -12,7 +12,23 @@
     };
   });
 
-  _module.factory('Lesson', function(LevelStates) {
+  _module.factory('LevelResult', function() {
+
+    var defaultAttrs = {
+      'combos': [],
+      'completed_at': null,
+      'missed_chars_count': {},
+      'seconds_elapsed': 0
+    };
+
+    function LevelResult() {
+      angular.extend(this, arguments, defaultAttrs);
+    }
+
+    return LevelResult;
+  });
+
+  _module.factory('Lesson', function(LevelStates, LevelResult) {
     var MIN_PASSING_ACCURACY = 90,
         MIN_PASSING_WPM      = 30;
 
@@ -28,6 +44,8 @@
       // Updated in typingLesson directive
       this.wpm = null;
       this.accuracy = null;
+
+      this.result = new LevelResult();
     }
 
     Lesson.prototype = {
@@ -58,13 +76,17 @@
         this.state = LevelStates.Running;
         this._updateVars();
       },
+      markCompleted: function() {
+        this.comboIdx = 0; // prevent from going out of bounds
+        this._updateVars();
+        this.result.completed_at = Date.now();
+        this.state = LevelStates.Post;
+      },
       next: function() {
         if (++this.letterIdx >= this.curCombo.length) {
           this.letterIdx = 0;
           if (++this.comboIdx >= this.combos.length) {
-            this.comboIdx = 0; // prevent from going out of bounds
-            this.state = LevelStates.Post;
-            this._updateVars();
+            this.markCompleted();
             return false;
           }
         }
@@ -88,7 +110,6 @@
 
     function link(scope, elem, attrs) {
       var wpmTimer = null;
-      var secondsPassed = 0;
 
       var levelStartWatch = scope.$watch('lesson.state', function(curState) {
         if (curState === LevelStates.Running) {
@@ -101,15 +122,13 @@
 
       function startWpmTimer() {
         wpmTimer = $interval(function() {
-          ++secondsPassed;
-          scope.lesson.wpm = ((scope.lesson.comboIdx+1) / (secondsPassed / 60)).toFixed(2);
+          var secondsTotal = ++scope.lesson.result.seconds_elapsed;
+          scope.lesson.wpm = ((scope.lesson.comboIdx+1) / (secondsTotal / 60)).toFixed(2);
         }, 1000);
       }
 
       function stopWpmTimer() {
         $interval.cancel(wpmTimer);
-        // Reset Defaults
-        secondsPassed = 0;
       }
 
       function correctKey() {
@@ -118,7 +137,13 @@
         }
       }
 
-      function wrongKey(actual) {
+      function wrongKey(expected, actual) {
+        // Update result
+        if (scope.lesson.result.missed_chars_count[expected] === undefined) {
+          scope.lesson.result.missed_chars_count[expected] = 0;
+        }
+        ++scope.lesson.result.missed_chars_count[expected];
+
         var letterNode = getComboElem().children()[scope.lesson.letterIdx];
         var letterElem = angular.element(letterNode);
 
@@ -155,7 +180,7 @@
         if (key === scope.lesson.curLetter) {
           correctKey();
         } else {
-          wrongKey(key);
+          wrongKey(scope.lesson.curLetter, key);
           ++wrongCount;
         }
 
