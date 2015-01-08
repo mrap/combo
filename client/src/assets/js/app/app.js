@@ -10,11 +10,11 @@
   app.config(function ($routeProvider){
     $routeProvider.
       when('/layout/:layout/level/:level', {
-      templateUrl: 'assets/partials/lesson.html',
+      templateUrl: 'public/partials/lesson.html',
       controller: 'TyperCtrl'
     }).
       when('/', {
-      templateUrl: 'assets/partials/home.html',
+      templateUrl: 'public/partials/home.html',
       controller: 'HomeCtrl'
     }).
       otherwise({

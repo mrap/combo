@@ -1,43 +1,15 @@
 {
-	"ImportPath": "github.com/mrap/combo",
+	"ImportPath": "combo/app/tmp",
 	"GoVersion": "go1.4",
 	"Deps": [
 		{
-			"ImportPath": "bitbucket.org/kardianos/osext",
-			"Comment": "null-15",
-			"Rev": "44140c5fc69ecf1102c5ef451d73cd98ef59b178"
+			"ImportPath": "code.google.com/p/go.net/websocket",
+			"Comment": "null-171",
+			"Rev": "0f4b0760c3d044e0cd2e630606936ae2c64d9cac"
 		},
 		{
-			"ImportPath": "github.com/GeertJohan/go.rice",
-			"Rev": "150a3c9fda3f4296028cf09c1cc071722ea0a707"
-		},
-		{
-			"ImportPath": "github.com/daaku/go.zipexe",
-			"Rev": "44882fc939f4c58d87a60de34796c6cfb9623269"
-		},
-		{
-			"ImportPath": "github.com/garyburd/redigo/internal",
-			"Rev": "3235c235f38bd5b41bd9eef26edbfad396be6274"
-		},
-		{
-			"ImportPath": "github.com/garyburd/redigo/redis",
-			"Rev": "3235c235f38bd5b41bd9eef26edbfad396be6274"
-		},
-		{
-			"ImportPath": "github.com/gorilla/context",
-			"Rev": "14f550f51af52180c2eefed15e5fd18d63c0a64a"
-		},
-		{
-			"ImportPath": "github.com/gorilla/mux",
-			"Rev": "e444e69cbd2e2e3e0749a2f3c717cec491552bbf"
-		},
-		{
-			"ImportPath": "github.com/gorilla/securecookie",
-			"Rev": "f0559d009e6943011cd1ba6eb16195cf5e0ed326"
-		},
-		{
-			"ImportPath": "github.com/gorilla/sessions",
-			"Rev": "aa5e036e6c44aec69a32eb41097001978b29ad31"
+			"ImportPath": "github.com/agtorre/gocolorize",
+			"Rev": "f42b554bf7f006936130c9bb4f971afd2d87f671"
 		},
 		{
 			"ImportPath": "github.com/mrap/stringutil",
@@ -48,13 +20,22 @@
 			"Rev": "77832fa6c9eeeea5679155523e2e09dfd69c0ae5"
 		},
 		{
-			"ImportPath": "github.com/nu7hatch/gouuid",
-			"Rev": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
+			"ImportPath": "github.com/revel/revel",
+			"Comment": "v0.11.3",
+			"Rev": "869b3e406cb7253f7512510e76b5e8f6cc4b79be"
 		},
 		{
-			"ImportPath": "gopkg.in/boj/redistore.v1",
-			"Comment": "v1",
-			"Rev": "9d1554b400d726c7aa54b6e4a836f273b72b97f7"
+			"ImportPath": "github.com/robfig/config",
+			"Rev": "0f78529c8c7e3e9a25f15876532ecbc07c7d99e6"
+		},
+		{
+			"ImportPath": "github.com/robfig/pathtree",
+			"Rev": "41257a1839e945fce74afd070e02bab2ea2c776a"
+		},
+		{
+			"ImportPath": "gopkg.in/fsnotify.v1",
+			"Comment": "v1.1.0",
+			"Rev": "f582d920d11386e8ae15227bb5933a8f9b4c3dec"
 		}
 	]
 }

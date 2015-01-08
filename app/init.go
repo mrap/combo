@@ -1,6 +1,9 @@
 package app
 
-import "github.com/revel/revel"
+import (
+	"combo/app/models"
+	"github.com/revel/revel"
+)
 
 func init() {
 	// Filters is the default set of global filters.
@@ -23,6 +26,9 @@ func init() {
 	// ( order dependent )
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
+	revel.OnAppStart(func() {
+		models.StoreWords("wordlists/google-10000-english.txt")
+	})
 }
 
 // TODO turn this into revel.HeaderFilter

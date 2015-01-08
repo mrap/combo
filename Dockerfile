@@ -61,34 +61,6 @@ RUN apt-get install -y mercurial
 RUN go get github.com/tools/godep
 ADD . /gopath/src/github.com/mrap/combo
 
-
-# Install Redis
-#
-# Inspired by https://github.com/dockerfile/redis
-#
-RUN \
-      apt-get install -y wget && \
-      cd /tmp && \
-      wget http://download.redis.io/redis-stable.tar.gz && \
-      tar xvzf redis-stable.tar.gz && \
-      cd redis-stable && \
-      make && \
-      make install && \
-      cp -f src/redis-sentinel /usr/local/bin && \
-      mkdir -p /etc/redis && \
-      cp -f *.conf /etc/redis && \
-      rm -rf /tmp/redis-stable* && \
-      sed -i 's/^\(bind .*\)$/# \1/' /etc/redis/redis.conf && \
-      sed -i 's/^\(daemonize .*\)$/# \1/' /etc/redis/redis.conf && \
-      sed -i 's/^\(dir .*\)$/# \1\ndir \/data/' /etc/redis/redis.conf && \
-      sed -i 's/^\(logfile .*\)$/# \1/' /etc/redis/redis.conf
-
-# Define mountable directories.
-      VOLUME ["/data"]
-
-# Define working directory.
-      WORKDIR /data
-
 # Setup Project
 # Allow container to use ssh keys
 RUN  echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
@@ -107,9 +79,6 @@ RUN grunt
 RUN godep restore
 
 RUN go install
-
-# Start Redis in background (port 6379)
-RUN redis-server /etc/redis/redis.conf &
 
 # Start the app
 CMD combo

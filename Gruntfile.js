@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'client/src/assets/',
-          src: ['partials/**'],
+          src: ['partials/**', 'img/**'],
           dest: 'client/dist/assets/',
         }],
       },
