@@ -140,6 +140,8 @@
       }
 
       function wrongKey(expected, actual) {
+        Sounds.playWrongKey();
+
         // Update result
         if (scope.lesson.result.missed_chars_count[expected] === undefined) {
           scope.lesson.result.missed_chars_count[expected] = 0;

@@ -10,6 +10,11 @@
         keyboardPressAudio.clone()[0].play();
       };
 
+      var wrongKeyAudio = angular.element('audio#wrong-key');
+      this.playWrongKey = function() {
+        wrongKeyAudio.clone()[0].play();
+      };
+
       var levelPassedAudio = angular.element('audio#level-passed');
       this.playLevelPassed = function() {
         levelPassedAudio.clone()[0].play();
