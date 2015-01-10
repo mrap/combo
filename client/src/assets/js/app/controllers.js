@@ -4,7 +4,8 @@
   var controllers = angular.module('appControllers', [
     'kbLayoutsModule',
     'typingLessonModule',
-    'userModule'
+    'userModule',
+    'sounds.service'
   ]);
 
   controllers.controller('MainCtrl', function($rootScope, $scope, User) {
@@ -31,7 +32,7 @@
     });
   });
 
-  controllers.controller('TyperCtrl', function($scope, $routeParams, $http, appRouter, Lesson, levelManager, LevelStates, kbLayouts) {
+  controllers.controller('TyperCtrl', function($scope, $routeParams, $http, appRouter, Lesson, levelManager, LevelStates, kbLayouts, Sounds) {
     $scope.currentUser.setLayout($routeParams.layout);
     $scope.selectedLevel = parseInt($routeParams.level);
     // Guard route
@@ -106,6 +107,8 @@
           });
 
           if ($scope.didUserPass()) {
+            Sounds.playLevelPassed();
+
             var nextLevel = $scope.selectedLevel+1;
             // if user passes last level
             if (nextLevel > levelManager.layoutLevels[$scope.currentUser.layout.name].length) {
@@ -118,6 +121,8 @@
                 changeLevel(nextLevel);
               });
             }
+          } else {
+            Sounds.playLevelFailed();
           }
           break;
       }

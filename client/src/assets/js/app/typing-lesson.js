@@ -1,7 +1,9 @@
 (function() {
   "use strict";
 
-  var _module = angular.module('typingLessonModule', []);
+  var _module = angular.module('typingLessonModule', [
+    'sounds.service'
+  ]);
 
   _module.factory('LevelStates', function() {
     return {
@@ -106,7 +108,7 @@
   });
 
 
-  _module.directive('typingLesson', function($timeout, $interval, LevelStates) {
+  _module.directive('typingLesson', function($timeout, $interval, LevelStates, Sounds) {
 
     function link(scope, elem, attrs) {
       var wpmTimer = null;
@@ -176,6 +178,8 @@
         if (scope.lesson.state != LevelStates.Running || !wrongKeyExp.test(key)) {
           return;
         }
+
+        Sounds.playKeyboardPress();
 
         if (key === scope.lesson.curLetter) {
           correctKey();
