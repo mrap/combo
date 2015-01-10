@@ -59,14 +59,14 @@ ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 # Install Godep
 RUN apt-get install -y mercurial
 RUN go get github.com/tools/godep
-ADD . /gopath/src/github.com/mrap/combo
+ADD . /gopath/src/combo
 
 # Setup Project
 # Allow container to use ssh keys
 RUN  echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
 
 # Define working directory.
-WORKDIR /gopath/src/github.com/mrap/combo
+WORKDIR /gopath/src/combo
 
 # Prepare frontend files
 RUN npm install
@@ -78,10 +78,11 @@ RUN grunt
 # Install go deps
 RUN godep restore
 
-RUN go install
+# Install Revel CMD
+RUN go get github.com/revel/cmd/revel
 
 # Start the app
-CMD combo
+CMD revel run combo prod
 
-EXPOSE 8000
+EXPOSE 9000
 
