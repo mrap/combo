@@ -2,6 +2,9 @@
   "name": "combo",
   "version": "1.0.0",
   "description": "combo =====",
+  "engines": {
+    "node": "6.2.0"
+  },
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,11 +24,11 @@
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-cssmin": "^0.11.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-ng-annotate": "^0.8.0",
-    "grunt-sass": "^0.17.0",
+    "grunt-ng-annotate": "^3.0.0",
+    "grunt-sass": "^1.2.1",
     "grunt-usemin": "^3.0.0",
     "load-grunt-tasks": "^1.0.0",
     "time-grunt": "^1.0.0"
