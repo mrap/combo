@@ -143,7 +143,8 @@ type ByCount []Combo
 func (a ByCount) Len() int      { return len(a) }
 func (a ByCount) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a ByCount) Less(i, j int) bool {
-	return a[i].Count < a[j].Count
+	// sort most to least
+	return a[i].Count > a[j].Count
 }
 
 func printComboListCounts(combos []string) {
