@@ -7,8 +7,6 @@
       function RepeatableAudioElement(id) {
         var cloneCount = 10;
         var audioElem = angular.element(id);
-        audioElem.autoplay = true;
-        audioElem.load();
 
         this.audios = [];
         for (var i = 0; i < cloneCount; i++) {
