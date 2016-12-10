@@ -17,12 +17,12 @@
 
       var levelPassedAudio = angular.element('audio#level-passed');
       this.playLevelPassed = function() {
-        levelPassedAudio.clone()[0].play();
+        levelPassedAudio[0].play();
       };
 
       var levelFailedAudio = angular.element('audio#level-failed');
       this.playLevelFailed = function() {
-        levelFailedAudio.clone()[0].play();
+        levelFailedAudio[0].play();
       };
 
     });
