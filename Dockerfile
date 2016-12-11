@@ -5,24 +5,11 @@ MAINTAINER Mike Rapadas <mike@mrap.me>
 
     # GET NODE INSTALL DEPS
     RUN       apt-get update --fix-missing
-    RUN       apt-get install -y build-essential python wget
-
-    ENV 			NODE_VERSION 0.10.26
-
-    RUN       wget http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION.tar.gz
-    RUN       tar -zxvf node-v$NODE_VERSION.tar.gz
-    RUN       rm node-v$NODE_VERSION.tar.gz
-    WORKDIR   node-v0.10.26
+    RUN       apt-get install -y build-essential curl libssl-dev
 
     # INSTALL NODE
-    RUN       ./configure
-    RUN       make
-    RUN       make install
-
-    # CLEAN UP
-    WORKDIR   ..
-    RUN       rm -r node-v$NODE_VERSION
-    RUN       apt-get remove -y build-essential python wget
+    RUN       curl -sL https://deb.nodesource.com/setup_6.x | bash
+    RUN       apt-get install nodejs
 
 # Grunt needs git
     RUN apt-get -y install git
@@ -46,27 +33,24 @@ MAINTAINER Mike Rapadas <mike@mrap.me>
 #
 
 # Install Go
-RUN apt-get install -y curl
 RUN \
   mkdir -p /goroot && \
-  curl https://storage.googleapis.com/golang/go1.4.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+    curl https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
 
 # Set environment variables.
 ENV GOROOT /goroot
 ENV GOPATH /gopath
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 
-# Install Godep
-RUN apt-get install -y mercurial
-RUN go get github.com/tools/godep
-ADD . /gopath/src/combo
-
-# Setup Project
-# Allow container to use ssh keys
-RUN  echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
-
 # Define working directory.
+ADD . /gopath/src/combo
 WORKDIR /gopath/src/combo
+
+# Install Go dependencies
+RUN apt-get install -y mercurial
+RUN go get github.com/mrap/wordpatterns
+RUN go get github.com/mrap/stringutil
+RUN go get github.com/revel/revel
 
 # Prepare frontend files
 RUN npm install
@@ -75,9 +59,6 @@ RUN npm install grunt-sass
 RUN bower --allow-root install
 RUN grunt
 
-# Install go deps
-RUN godep restore
-
 # Install Revel CMD
 RUN go get github.com/revel/cmd/revel
 
@@ -85,4 +66,3 @@ RUN go get github.com/revel/cmd/revel
 CMD revel run combo prod
 
 EXPOSE 9000
-
