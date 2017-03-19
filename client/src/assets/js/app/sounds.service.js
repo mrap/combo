@@ -1,16 +1,17 @@
 (function() {
   "use strict";
 
-  angular.module('sounds.service', [])
-    .service('Sounds', function() {
+  angular.module('sounds.service', ['ngAudio'])
+    .service('Sounds', function(ngAudio) {
 
       function RepeatableAudioElement(id) {
         var cloneCount = 10;
-        var audioElem = angular.element(id);
+        var audioSrc = angular.element(id).attr('src');
 
         this.audios = [];
         for (var i = 0; i < cloneCount; i++) {
-          this.audios.push(audioElem.clone()[0]);
+          var sound = ngAudio.load(audioSrc);
+          this.audios.push(sound);
         }
 
         this.i = 0;
@@ -20,10 +21,7 @@
         var a = this.audios[this.i];
 
         // We might be trying to play a sound that's already playing.
-        if (!a.ended) {
-          a.pause();
-          a.currentTime = 0.0;
-        }
+        a.currentTime = 0;
         a.play();
 
         if (++this.i >= this.audios.length) this.i = 0;
