@@ -9,10 +9,10 @@
     <script src="/public/js/main.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body ng-keydown="rootKeyDown($event);" ng-keypress="rootKeyPress($event);">
-    <audio id="keyboard-press" src="/public/audio/keyboard-press.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
-    <audio id="wrong-key" src="/public/audio/wrong-key.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
-    <audio id="level-passed" src="/public/audio/level/passed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
-    <audio id="level-failed" src="/public/audio/level/failed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
+    <audio id="keyboard-press" src="https://s3-us-west-2.amazonaws.com/zentyping/audio/keyboard-press.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
+    <audio id="wrong-key" src="https://s3-us-west-2.amazonaws.com/zentyping/audio/wrong-key.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
+    <audio id="level-passed" src="https://s3-us-west-2.amazonaws.com/zentyping/audio/level/passed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
+    <audio id="level-failed" src="https://s3-us-west-2.amazonaws.com/zentyping/audio/level/failed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
     <div ng-view class="container main-content">
       {{ template "content" . }}
     </div>
