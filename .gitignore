@@ -32,6 +32,6 @@ _vendor/
 bower_components/
 node_modules/
 npm-debug.log
-client/dist/
+functions/**/*/build
 client/src/assets/stylesheets/*.css
 *.rdb

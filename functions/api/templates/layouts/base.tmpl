@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="typeApp" ng-controller="MainCtrl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/public/css/main.css" media="screen,projection">
+    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+    <script src="/public/js/main.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body ng-keydown="rootKeyDown($event);" ng-keypress="rootKeyPress($event);">
+    <audio id="keyboard-press" src="/public/audio/keyboard-press.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
+    <audio id="wrong-key" src="/public/audio/wrong-key.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
+    <audio id="level-passed" src="/public/audio/level/passed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
+    <audio id="level-failed" src="/public/audio/level/failed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
+    <div ng-view class="container main-content">
+      {{ template "content" . }}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "zentyping",
+  "description": "Zentyping web app",
+  "runtime": "golang",
+  "timeout": 5,
+  "memory": 512,
+  "role": "arn:aws:iam::669984581912:role/apex_lambda_function"
+}
