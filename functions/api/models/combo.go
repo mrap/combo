@@ -22,6 +22,10 @@ var (
 	_sharedWordmap = make(wordpatterns.Wordmap)
 )
 
+func init() {
+	StoreWords("wordlists/google-10000-english.txt")
+}
+
 func GenerateCombos(chars string, count, minLen, maxLen int) []string {
 	// Validate and normalize params
 	if len(chars) == 0 {

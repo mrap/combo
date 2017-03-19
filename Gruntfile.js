@@ -1,5 +1,7 @@
 'use strict';
 
+const CLIENT_DEST = 'functions/api/build/client'
+
 module.exports = function(grunt) {
   require('time-grunt')(grunt);
   require('load-grunt-tasks')(grunt);
@@ -8,14 +10,14 @@ module.exports = function(grunt) {
     copy: {
       index: {
         src: 'client/src/index.html',
-        dest: 'client/dist/index.html',
+        dest: `${CLIENT_DEST}/index.html`,
       },
       assets: {
         files: [{
           expand: true,
           cwd: 'client/src/assets/',
           src: ['partials/**', 'img/**', 'audio/**'],
-          dest: 'client/dist/assets/',
+          dest: `${CLIENT_DEST}/assets/`,
         }],
       },
       materialize: {
@@ -23,7 +25,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'bower_components/materialize/dist/',
           src: ['font/**'],
-          dest: 'client/dist/assets/',
+          dest: `${CLIENT_DEST}/assets/`,
         }],
       },
     },
@@ -57,7 +59,7 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: 'client/dist/index.html',
+      html: `${CLIENT_DEST}/index.html`,
       options: {
         assetsDirs: ['bower_components', 'client'],
       },
@@ -65,7 +67,7 @@ module.exports = function(grunt) {
     useminPrepare: {
       html: 'client/src/index.html',
       options: {
-        dest: 'client/dist',
+        dest: `${CLIENT_DEST}`,
       }
     },
     watch: {

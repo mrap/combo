@@ -9,32 +9,12 @@
     <script src="/public/js/main.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body ng-keydown="rootKeyDown($event);" ng-keypress="rootKeyPress($event);">
-
-    {{if .flash.success}}
-      <div class="alert alert-success">
-        {{.flash.success}}
-      </div>
-    {{end}}
-
-    {{if or .errors .flash.error}}
-      <div class="alert alert-error">
-        {{if .flash.error}}
-          {{.flash.error}}
-        {{end}}
-        <ul style="margin-top:10px;">
-          {{range .errors}}
-            <li>{{.}}</li>
-          {{end}}
-        </ul>
-      </div>
-    {{end}}
-
-    <div ng-view class="container main-content">
-      {{ template "content" . }}
-    </div>
     <audio id="keyboard-press" src="/public/audio/keyboard-press.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
     <audio id="wrong-key" src="/public/audio/wrong-key.mp3" preload="auto" volume="0.5" type="audio/mp3"></audio>
     <audio id="level-passed" src="/public/audio/level/passed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
     <audio id="level-failed" src="/public/audio/level/failed.mp3" preload="auto" volume="0.7" type="audio/mp3"></audio>
+    <div ng-view class="container main-content">
+      {{ template "content" . }}
+    </div>
   </body>
 </html>
