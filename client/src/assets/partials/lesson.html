@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <button class="btn" ng-click="lesson.endLesson()" type="button">End</button>
 
     <div class="divider lesson-progress-bar" style="width:{{lesson.completionPercent}}%;"></div>
 
@@ -68,6 +67,10 @@
 </typing-lesson>
 
 <div class="divider"></div>
+
+<div class="lesson-end" ng-show="lesson.state === 'Running'">
+  <button class="btn-flat" ng-click="lesson.endLesson()" type="button">End</button>
+</div>
 
 <div class="section level-nav">
   <div class="row">
