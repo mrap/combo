@@ -10,6 +10,12 @@ $letterSize: 8em;
   padding: 2em 0;
 }
 
+.lesson-progress {
+  height: 5px;
+  border-radius: 10px;
+  background-color: #2bc252;
+}
+
 .current-combo {
   @extend .big-lettered;
   @extend .blue-grey-text;
