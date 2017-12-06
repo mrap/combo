@@ -47,7 +47,7 @@
         {{lesson.combosLeft}} Combos Left
       </div>
     </div>
-    <div class="divider lesson-progress" style="width:{{lesson.lessonCompletionPercent}}%;"></div>
+    <div class="divider lesson-progress-bar" style="width:{{lesson.completionPercent}}%;"></div>
 
     <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
     <span ng-repeat="letter in lesson.curCombo track by $index" ng-class="{'pressable-key': $index == lesson.letterIdx}">{{letter}}</span>

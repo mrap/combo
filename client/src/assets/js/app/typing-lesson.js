@@ -41,7 +41,7 @@
       this.curCombo = "";
       this.curLetter = "";
       this.combosLeft = 0;
-      this.lessonCompletionPercent = 0;
+      this.completionPercent = 0;
       this.state = LevelStates.NotReady;
 
       // Updated in typingLesson directive
@@ -56,7 +56,7 @@
         this.curCombo = this.combos[this.comboIdx];
         this.curLetter = this.curCombo[this.letterIdx];
         this.combosLeft = this.combos.length - this.comboIdx;
-        this.lessonCompletionPercent = 100 - (this.combosLeft / this.combos.length * 100);
+        this.completionPercent = 100 - (this.combosLeft / this.combos.length * 100);
       },
       loadCombos: function(combos) {
         if (!combos) {
