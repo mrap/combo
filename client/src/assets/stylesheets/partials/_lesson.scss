@@ -10,6 +10,12 @@ $letterSize: 8em;
   padding: 2em 0;
 }
 
+.lesson-progress-bar {
+  height: 0.5rem;
+  border-radius: 0.5em;
+  background: $progress-color;
+}
+
 .current-combo {
   @extend .big-lettered;
   @extend .blue-grey-text;
