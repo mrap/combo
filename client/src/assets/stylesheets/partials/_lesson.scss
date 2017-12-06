@@ -10,10 +10,10 @@ $letterSize: 8em;
   padding: 2em 0;
 }
 
-.lesson-progress {
-  height: 5px;
-  border-radius: 10px;
-  background-color: #2bc252;
+.lesson-progress-bar {
+  height: 0.35rem;
+  border-radius: 0.71rem;
+  background-color: $progress-color;
 }
 
 .current-combo {
