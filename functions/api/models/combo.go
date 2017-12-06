@@ -69,8 +69,7 @@ func CombosWithChars(lookup *wordpatterns.Wordmap, chars string, minLen int, max
 	var combos []string
 
 	for _, combo := range stringutil.Substrs(chars, minLen) {
-		words := lookup.WordsContaining(combo)
-		if (len(words) == 0 || minLen != 0 && len(combo) < minLen) || (maxLen != 0 && len(combo) > maxLen) {
+		if (minLen != 0 && len(combo) < minLen) || (maxLen != 0 && len(combo) > maxLen || len(lookup.WordsContaining(combo)) == 0) {
 			continue
 		} else {
 			combos = append(combos, combo)
