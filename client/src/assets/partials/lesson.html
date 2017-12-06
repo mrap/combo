@@ -15,8 +15,7 @@
       <div class="row stats">
         <div class="col s6">
           <div class="accuracy">
-            <div class="stat-value" ng-if="lesson.accuracy === null">-</div>
-            <div class="stat-value" ng-if="lesson.accuracy > 0">{{lesson.accuracy}}%</div>
+            <div class="stat-value">{{lesson.accuracyLabel()}}</div>
             <div class="stat-label">Accuracy</div>
           </div>
         </div>

@@ -107,6 +107,9 @@
       endLesson: function() {
         this.markCompleted();
       },
+      accuracyLabel: function() {
+        return (this.accuracy) ? `${this.accuracy}%` : '-';
+      },
     };
 
     return Lesson;

@@ -34,6 +34,7 @@ module.exports = function(grunt) {
         globals: {
           angular: true,
         },
+        esversion: 6,
       },
       all: ['client/src/assets/js/**/*.js']
     },
