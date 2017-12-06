@@ -18,8 +18,7 @@ const (
 // TODO: Might provide other languages/wordlists in the future.
 //       We would need to store lookups/wordmaps in a db
 var (
-	_sharedLookup  = make(wordpatterns.Wordmap)
-	_sharedWordmap = make(wordpatterns.Wordmap)
+	_sharedWordmap *wordpatterns.Wordmap
 )
 
 func init() {
@@ -48,33 +47,18 @@ func GenerateCombos(chars string, count, minLen, maxLen int) []string {
 		maxLen = minLen
 	}
 
-	combos := RankedCombos(_sharedLookup, chars, minLen, maxLen)
+	combos := RankedCombos(_sharedWordmap, chars, minLen, maxLen)
 	return generateComboList(_sharedWordmap, combos, count)
 }
 
 // StoreWords stores words from a word list file into
 func StoreWords(filename string) {
-	wm := wordpatterns.CreateWordmap(filename)
+	wm := NewDefaultWordmap()
+	wordpatterns.PopulateFromFile(wm, filename)
 	_sharedWordmap = wm
-	_sharedLookup = CreateCharWordLookup(_sharedWordmap)
 }
 
-// CreateCharWordLookup creates a lookup structure that makes it efficient
-// to query for sub-words that only contain specific characters
-func CreateCharWordLookup(wm wordpatterns.Wordmap) wordpatterns.Wordmap {
-	var (
-		lookup = make(wordpatterns.Wordmap)
-		sorted string
-	)
-
-	for subword, _ := range wm {
-		sorted = stringutil.SortString(subword)
-		lookup[sorted] = append(lookup[sorted], subword)
-	}
-	return lookup
-}
-
-func CombosWithChars(lookup wordpatterns.Wordmap, chars string, minLen int, maxLen int) []string {
+func CombosWithChars(lookup *wordpatterns.Wordmap, chars string, minLen int, maxLen int) []string {
 	if maxLen < 0 {
 		maxLen = 0
 	}
@@ -83,19 +67,19 @@ func CombosWithChars(lookup wordpatterns.Wordmap, chars string, minLen int, maxL
 	}
 
 	var combos []string
-	sortedChars := stringutil.SortString(chars)
 
-	for _, subsorted := range stringutil.Substrs(sortedChars, 2) {
-		if (minLen != 0 && len(subsorted) < minLen) || (maxLen != 0 && len(subsorted) > maxLen) {
+	for _, combo := range stringutil.Substrs(chars, minLen) {
+		words := lookup.WordsContaining(combo)
+		if (len(words) == 0 || minLen != 0 && len(combo) < minLen) || (maxLen != 0 && len(combo) > maxLen) {
 			continue
 		} else {
-			combos = append(combos, lookup[subsorted]...)
+			combos = append(combos, combo)
 		}
 	}
 	return combos
 }
 
-func RankedCombos(lookup wordpatterns.Wordmap, chars string, minLen, maxLen int) []string {
+func RankedCombos(lookup *wordpatterns.Wordmap, chars string, minLen, maxLen int) []string {
 	combos := CombosWithChars(lookup, chars, minLen, maxLen)
 	sort.Sort(ByWordCount(combos))
 	return combos
@@ -103,10 +87,10 @@ func RankedCombos(lookup wordpatterns.Wordmap, chars string, minLen, maxLen int)
 
 // generateComboList returns a slice of combos that are distributed based on rank
 // More occurring combos will appear more frequently
-func generateComboList(wm wordpatterns.Wordmap, combos []string, count int) []string {
+func generateComboList(wm *wordpatterns.Wordmap, combos []string, count int) []string {
 	total := 0
 	for _, c := range combos {
-		total += len(wm[c])
+		total += len(wm.WordsContaining(c))
 	}
 
 	list := make([]string, count)
@@ -115,7 +99,7 @@ func generateComboList(wm wordpatterns.Wordmap, combos []string, count int) []st
 		cur = 0
 		r = rand.Intn(total) + 1
 		for _, c := range combos {
-			cur += len(wm[c])
+			cur += len(wm.WordsContaining(c))
 			if r <= cur {
 				list[i] = c
 				break
