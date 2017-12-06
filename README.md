@@ -5,12 +5,12 @@
 
 ### Build client assets:
 
-    grunt
+    bower install && grunt
 
 ### Start the api server locally:
 
     cd functions/api
-    go run server/main.go
+    go run serve/main.go
 
   Go to http://localhost:9000
 
