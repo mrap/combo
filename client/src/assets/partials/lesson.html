@@ -15,7 +15,7 @@
       <div class="row stats">
         <div class="col s6">
           <div class="accuracy">
-            <div class="stat-value">{{lesson.accuracy}}%</div>
+            <div class="stat-value">{{lesson.accuracyLabel()}}</div>
             <div class="stat-label">Accuracy</div>
           </div>
         </div>
@@ -47,6 +47,7 @@
         {{lesson.combosLeft}} Combos Left
       </div>
     </div>
+
     <div class="divider lesson-progress-bar" style="width:{{lesson.completionPercent}}%;"></div>
 
     <current-combo animate-combo="lesson.comboIdx" class="lesson-inner current-combo">
@@ -65,6 +66,10 @@
 </typing-lesson>
 
 <div class="divider"></div>
+
+<div class="lesson-end" ng-show="lesson.isRunning()">
+  <button class="btn-flat" ng-click="lesson.endLesson()" type="button">End</button>
+</div>
 
 <div class="section level-nav">
   <div class="row">

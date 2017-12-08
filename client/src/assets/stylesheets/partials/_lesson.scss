@@ -16,6 +16,11 @@ $letterSize: 8em;
   background: $progress-color;
 }
 
+.lesson-end {
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .current-combo {
   @extend .big-lettered;
   @extend .blue-grey-text;

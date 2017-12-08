@@ -103,7 +103,16 @@
       },
       isPassable: function() {
         return this.accuracy >= MIN_PASSING_ACCURACY && this.wpm >= MIN_PASSING_WPM;
-      }
+      },
+      endLesson: function() {
+        this.markCompleted();
+      },
+      accuracyLabel: function() {
+        return (this.accuracy) ? `${this.accuracy}%` : '-';
+      },
+      isRunning: function() {
+        return (this.state === LevelStates.Running);
+      },
     };
 
     return Lesson;
@@ -126,6 +135,11 @@
 
       function startWpmTimer() {
         wpmTimer = $interval(function() {
+          if (scope.lesson.state === LevelStates.Post) {
+            stopWpmTimer();
+            return;
+          }
+
           var secondsTotal = ++scope.lesson.result.seconds_elapsed;
           scope.lesson.wpm = ((scope.lesson.comboIdx+1) / (secondsTotal / 60)).toFixed(2);
         }, 1000);
