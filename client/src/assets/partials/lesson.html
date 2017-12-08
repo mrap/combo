@@ -68,7 +68,7 @@
 
 <div class="divider"></div>
 
-<div class="lesson-end" ng-show="lesson.state === 'Running'">
+<div class="lesson-end" ng-show="lesson.isRunning()">
   <button class="btn-flat" ng-click="lesson.endLesson()" type="button">End</button>
 </div>
 
