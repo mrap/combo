@@ -111,7 +111,7 @@
         return (this.accuracy) ? `${this.accuracy}%` : '-';
       },
       isRunning: function() {
-        return this.state === LevelStates.Running;
+        return (this.state === LevelStates.Running);
       },
     };
 
