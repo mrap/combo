@@ -48,6 +48,7 @@
       this.wpm = null;
       this.accuracy = null;
       this.sortedIncorrectChars = [];
+      this.totalWrongCount = 0;
 
       this.result = new LevelResult();
     }
@@ -118,7 +119,12 @@
         let charsCount = this.result.missed_chars_count;
 
         for(var key in charsCount){
-          this.sortedIncorrectChars.push({letter: key,count: charsCount[key]});
+          this.sortedIncorrectChars.push({
+            letter: key,
+            count: charsCount[key],
+            percent: (charsCount[key] / this.totalWrongCount * 100), 
+            opacity: (charsCount[key] / this.totalWrongCount)
+          });
         }
 
         return this.sortedIncorrectChars.sort(function(a,b){
@@ -221,6 +227,7 @@
 
         // Update Accuracy
         var correctCount = ++charCount - wrongCount;
+        scope.lesson.totalWrongCount = wrongCount;
         scope.lesson.accuracy = (correctCount / charCount * 100).toFixed(2);
       });
 
