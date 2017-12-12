@@ -27,6 +27,9 @@
         </div>
       </div>
 
+      <div class="lesson-incorrect-chars">
+        <div ng-repeat="char in lesson.sortedIncorrectChars track by $index">{{char.letter}}</div>
+      </div>
       <div ng-switch="didUserPass()">
         <div ng-switch-when="true">
           <p class="lesson-prompt flow-text"><span class="pressable-key">r</span> to retry, <span class="pressable-key">Enter</span> to continue.</p>

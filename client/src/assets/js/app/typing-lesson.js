@@ -47,6 +47,7 @@
       // Updated in typingLesson directive
       this.wpm = null;
       this.accuracy = null;
+      this.sortedIncorrectChars = [];
 
       this.result = new LevelResult();
     }
@@ -113,6 +114,17 @@
       isRunning: function() {
         return (this.state === LevelStates.Running);
       },
+      incorrectCharsSorted: function() {
+        let charsCount = this.result.missed_chars_count;
+
+        for(var key in charsCount){
+          this.sortedIncorrectChars.push({letter: key,count: charsCount[key]});
+        }
+
+        return this.sortedIncorrectChars.sort(function(a,b){
+          return b.count - a.count;
+        });
+      },
     };
 
     return Lesson;
@@ -136,6 +148,7 @@
       function startWpmTimer() {
         wpmTimer = $interval(function() {
           if (scope.lesson.state === LevelStates.Post) {
+            scope.lesson.incorrectCharsSorted();
             stopWpmTimer();
             return;
           }
