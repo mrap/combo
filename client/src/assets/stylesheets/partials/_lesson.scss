@@ -7,7 +7,7 @@ $letterSize: 8em;
 .lesson-inner {
   display: block;
   text-align: center;
-  padding: 2em 0;
+  padding: 2em 15%;
 }
 
 .lesson-progress-bar {
@@ -19,6 +19,15 @@ $letterSize: 8em;
 .lesson-end {
   text-align: center;
   margin-top: 1rem;
+}
+
+.lesson-incorrect-chars {
+  width: 100%;
+  margin: 2rem 0;
+  
+  .char {
+    display: inline-block;
+  }
 }
 
 .current-combo {

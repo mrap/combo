@@ -28,10 +28,8 @@
       </div>
 
       <div class="lesson-incorrect-chars">
-        <div ng-repeat="char in lesson.sortedIncorrectChars track by $index">
-          <div class="char" style="height:{{char.percent}}%; background:rgba(227, 69, 9, {{char.opacity}})">
-            {{char.letter}}
-          </div>
+        <div class="char" ng-repeat="char in lesson.sortedIncorrectChars track by $index"style="width:{{char.percent}}%; background:rgba(227, 69, 9, {{char.opacity}})">
+          {{char.letter}}
         </div>
       </div>
       <div ng-switch="didUserPass()">
