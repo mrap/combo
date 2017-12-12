@@ -118,7 +118,7 @@
       incorrectCharsSorted: function() {
         let charsCount = this.result.missed_chars_count;
 
-        for(var key in charsCount){
+        for(let key in charsCount){
           this.sortedIncorrectChars.push({
             letter: key,
             count: charsCount[key],
