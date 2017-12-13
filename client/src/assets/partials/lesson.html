@@ -28,7 +28,9 @@
       </div>
 
       <div class="lesson-incorrect-chars">
-        <div class="char" ng-repeat="char in lesson.sortedIncorrectChars track by $index"style="width:{{char.percent}}%; background:rgba(227, 69, 9, {{char.opacity}})">
+        <div class="char" ng-repeat="char in lesson.sortIncorrectChars track by $index"style="width:{{char.percent}}%;">
+          <div class="char-backgroud-opacity" style="opacity: {{char.opacity}};">
+          </div>
           {{char.letter}}
         </div>
       </div>
