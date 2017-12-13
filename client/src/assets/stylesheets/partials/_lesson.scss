@@ -30,8 +30,8 @@ $letterSize: 8em;
     position: relative;
   }
 
-  .char-backgroud-opacity{
-    background: $stats-bar-color;
+  .char-background{
+    background: $incorrect-char-color;
     position: absolute;
     top: 0;
     bottom: 0;

@@ -47,7 +47,7 @@
       // Updated in typingLesson directive
       this.wpm = null;
       this.accuracy = null;
-      this.sortedIncorrectChars = [];
+      this.incorrectChars = [];
       this.totalWrongCount = 0;
 
       this.result = new LevelResult();
@@ -115,19 +115,20 @@
       isRunning: function() {
         return (this.state === LevelStates.Running);
       },
-      incorrectCharsSorted: function() {
+      sortIncorrectChars: function() {
         let charsCount = this.result.missed_chars_count;
 
         for(let key in charsCount){
-          this.sortedIncorrectChars.push({
+          let incorrectCharCount = charsCount[key];
+          let incorrectPercent = (incorrectCharCount / this.totalWrongCount);
+          this.incorrectChars.push({
             letter: key,
-            count: charsCount[key],
-            percent: (charsCount[key] / this.totalWrongCount * 100), 
-            opacity: (charsCount[key] / this.totalWrongCount)
+            count: incorrectCharCount,
+            percent: (incorrectPercent * 100),
           });
         }
 
-        return this.sortedIncorrectChars.sort(function(a,b){
+        return this.incorrectChars.sort(function(a,b){
           return b.count - a.count;
         });
       },
@@ -154,8 +155,8 @@
       function startWpmTimer() {
         wpmTimer = $interval(function() {
           if (scope.lesson.state === LevelStates.Post) {
-            scope.lesson.incorrectCharsSorted();
             stopWpmTimer();
+            scope.lesson.sortIncorrectChars();
             return;
           }
 

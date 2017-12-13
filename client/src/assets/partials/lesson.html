@@ -28,9 +28,8 @@
       </div>
 
       <div class="lesson-incorrect-chars">
-        <div class="char" ng-repeat="char in lesson.sortIncorrectChars track by $index"style="width:{{char.percent}}%;">
-          <div class="char-backgroud-opacity" style="opacity: {{char.opacity}};">
-          </div>
+        <div class="char" ng-repeat="char in lesson.incorrectChars track by $index"style="width:{{char.percent}}%;">
+          <div class="char-background" style="opacity: {{char.percent / 100}};"></div>
           {{char.letter}}
         </div>
       </div>
