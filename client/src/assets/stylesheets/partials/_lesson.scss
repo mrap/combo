@@ -56,7 +56,7 @@ $letterSize: 8em;
   }
 
   .wrong {
-    @extend .red-text;
+    color: $incorrect-char-color;
   }
 }
 
