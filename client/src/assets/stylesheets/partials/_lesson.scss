@@ -24,7 +24,8 @@ $letterSize: 8em;
 .lesson-incorrect-chars {
   width: 100%;
   margin: 2rem 0;
-  
+  display: inline-flex;
+
   .char {
     display: inline-block;
     position: relative;
@@ -37,6 +38,7 @@ $letterSize: 8em;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: -1;
   }
 }
 
