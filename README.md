@@ -14,6 +14,12 @@
 
   Go to http://localhost:9000
 
+### Start the api server with Docker:
+
+    docker build -t mrap/combo .
+    docker run ti -p 9000:9000 mrap/combo
+
 ### Deploy (from project root):
 
     grunt && apex deploy
+
