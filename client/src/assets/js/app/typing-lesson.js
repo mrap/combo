@@ -156,7 +156,6 @@
         wpmTimer = $interval(function() {
           if (scope.lesson.state === LevelStates.Post) {
             stopWpmTimer();
-            scope.lesson.sortIncorrectChars();
             return;
           }
 
@@ -167,6 +166,7 @@
 
       function stopWpmTimer() {
         $interval.cancel(wpmTimer);
+        scope.lesson.sortIncorrectChars();
       }
 
       function correctKey() {
