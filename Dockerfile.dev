@@ -1,0 +1,33 @@
+FROM golang:1.9
+LABEL maintainer="Mike Rapadas <mike@mrap.me>"
+
+# install go dependencies
+RUN go get \
+  github.com/gin-gonic/gin \
+  github.com/michelloworld/ez-gin-template \
+  github.com/apex/go-apex \
+  github.com/mrap/stringutil \
+  github.com/mrap/wordpatterns
+
+# install node, yarn, bower and grunt
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash && \
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+  apt-get update && \
+  apt-get install -y nodejs yarn && \
+  yarn global add bower grunt-cli
+
+COPY . /go/src/github.com/mrap/combo
+
+WORKDIR /go/src/github.com/mrap/combo
+
+# build assets
+RUN yarn install && \
+  bower install --allow-root && \
+  grunt build
+
+WORKDIR /go/src/github.com/mrap/combo/functions/api
+
+EXPOSE 9000
+
+CMD go run ./serve/main.go
