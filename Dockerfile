@@ -1,68 +1,46 @@
-FROM peenuty/rails-passenger-nginx-docker-i:1.0.1
-MAINTAINER Mike Rapadas <mike@mrap.me>
+# build assets
+FROM node:6.12.2-slim
 
-# Install Node
+RUN apt-get update && \
+  apt-get install -y git && \
+  yarn global add bower grunt-cli
 
-    # GET NODE INSTALL DEPS
-    RUN       apt-get update --fix-missing
-    RUN       apt-get install -y build-essential curl libssl-dev
+COPY . /app
 
-    # INSTALL NODE
-    RUN       curl -sL https://deb.nodesource.com/setup_6.x | bash
-    RUN       apt-get install nodejs
+WORKDIR /app
 
-# Grunt needs git
-    RUN apt-get -y install git
+RUN yarn install && \
+  bower install --allow-root && \
+  grunt build
 
-# Install Sass
+# build go binary
+FROM golang:1.9-alpine
 
-    RUN bash -l -c "gem install sass"
+RUN apk add -U git && \
+  go get \
+    github.com/gin-gonic/gin \
+    github.com/michelloworld/ez-gin-template \
+    github.com/mrap/stringutil \
+    github.com/mrap/wordpatterns
 
-# Install grunt
-    RUN npm install -g grunt-cli
+COPY . /go/src/github.com/mrap/combo
 
-# Install Bower
-    RUN npm install -g bower
+WORKDIR /go/src/github.com/mrap/combo/functions/api/serve
 
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+  go build -a -ldflags '-extldflags "-static"' -o /app/api
 
-# Setup Go
-#
-# Go Dockerfile
-#
-# https://github.com/dockerfile/go
-#
+# copy go binary to a clean base image
+FROM alpine:3.6
+LABEL maintainer="Mike Rapadas <mike@mrap.me>"
 
-# Install Go
-RUN \
-  mkdir -p /goroot && \
-    curl https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+COPY ./functions/api/wordlists /app/wordlists
+COPY ./functions/api/templates /app/templates
+COPY --from=0 /app/functions/api/build/client /app/build/client
+COPY --from=1 /app/api /app/api
 
-# Set environment variables.
-ENV GOROOT /goroot
-ENV GOPATH /gopath
-ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
-
-# Define working directory.
-ADD . /gopath/src/combo
-WORKDIR /gopath/src/combo
-
-# Install Go dependencies
-RUN apt-get install -y mercurial
-RUN go get github.com/mrap/wordpatterns
-RUN go get github.com/mrap/stringutil
-RUN go get github.com/revel/revel
-
-# Prepare frontend files
-RUN npm install
-# manually npm install grunt-sass to ensure libsass bindings
-RUN npm install grunt-sass
-RUN bower --allow-root install
-RUN grunt
-
-# Install Revel CMD
-RUN go get github.com/revel/cmd/revel
-
-# Start the app
-CMD revel run combo prod
+WORKDIR /app
 
 EXPOSE 9000
+
+CMD /app/api

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "combo =====",
   "engines": {
-    "node": "6.2.0"
+    "node": "6.12.2"
   },
   "main": "Gruntfile.js",
   "scripts": {
